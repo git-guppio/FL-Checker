@@ -1,0 +1,14 @@
+2024-10-29 14:59:51 - CheckFL - Started - Avvio funzione
+2024-10-29 14:59:51 - CheckData - Started - Avvio funzione
+2024-10-29 14:59:51 - CheckData - Completed - Funzione CheckData completata (Tempo di esecuzione: 9.83 ms)
+2024-10-29 14:59:51 - CheckCountry - Started - Avvio funzione
+2024-10-29 14:59:51 - CheckCountry - Completed - Esecuzione completata con successo (Tempo di esecuzione: 3.67 ms)
+2024-10-29 14:59:51 - CheckTechnology - Started - Avvio funzione
+2024-10-29 14:59:51 - CheckTechnology - Completed - Esecuzione completata con successo (Tempo di esecuzione: 4.20 ms)
+2024-10-29 14:59:51 - CheckMask - Started - Avvio funzione
+2024-10-29 14:59:51 - CheckMask - Completed - Esecuzione completata con successo (Tempo di esecuzione: 2.83 ms)
+2024-10-29 14:59:51 - CheckParent_new - Started - Avvio funzione
+2024-10-29 14:59:51 - CheckParent_new - Error - Elementi parent mancanti. - Line Number: 674
+2024-10-29 14:59:51 - CheckParent_new - Error - Elementi parent mancanti. - Line Number: 124
+2024-10-29 14:59:51 - CheckFL - Error - Errore: Errore nella verifica dei parent. - Line Number: 193
+2024-10-29 15:00:53 - MainGUI - Completed - Esecuzione completata con successo (Tempo di esecuzione: 1 min 24 sec 320.84 ms)

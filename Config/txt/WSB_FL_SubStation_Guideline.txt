@@ -1,0 +1,96 @@
+FL	Descrizione
+kkt	IsoCode Country + Technology (S)
+kkt-yyyy	Plant code 
+kkt-yyyy-0A	Common Energy Collecting & Delivery System
+kkt-yyyy-0A-xT	HV/MV Common Transformer
+kkt-yyyy-0A-xT-HV	HV Section
+kkt-yyyy-0A-xT-HV-IT	HV Breaker/Circuit Breaker/HGIS
+kkt-yyyy-0A-xT-HV-Rn	HV/MV Protective Relays
+kkt-yyyy-0A-xT-HV-Sn	HV Surge Arrester
+kkt-yyyy-0A-xT-HV-Dn	HV Disconnector
+kkt-yyyy-0A-xT-HV-An	HV M&P Transformers CT
+kkt-yyyy-0A-xT-HV-Vn	HV M&P Transformers VT
+kkt-yyyy-0A-xT-HV-BS	HV Connection
+kkt-yyyy-0A-xT-HV-Mn	Energy Meter
+kkt-yyyy-0A-xT-Mn	MV Section
+kkt-yyyy-0A-xT-Mn-In	MV Circuit Breaker/MV Panel
+kkt-yyyy-0A-xT-Mn-Dn	MV Disconnector
+kkt-yyyy-0A-xT-Mn-An	MV M&P Transformers CT
+kkt-yyyy-0A-xT-Mn-Vn	MV M&P Transformers VT
+kkt-yyyy-0A-xT-Mn-Sn	MV Surge Arrester
+kkt-yyyy-0A-xT-Mn-BS	MV Connection
+kkt-yyyy-0A-xT-Mn-0n	Line protection
+kkt-yyyy-0A-xT-Mn-Hn	Harmonic Filter
+kkt-yyyy-0A-xT-Mn-ZR	Shunt Reactor
+kkt-yyyy-0A-xT-Mn-Zn	Zig Zag Earthing Transformer
+kkt-yyyy-0A-xT-Mn-ER	Earthing Reactor
+kkt-yyyy-0A-xT-Mn-Cn	Capacitor Bank MV
+kkt-yyyy-0A-xT-Mn-Mn	Energy Meter
+kkt-yyyy-0A-xT-OC	Civil Works
+kkt-yyyy-0A-xL	HV Line
+kkt-yyyy-0A-xL-HV	HV Section
+kkt-yyyy-0A-xL-HV-IT	HV Breaker/Circuit Breaker/HGIS
+kkt-yyyy-0A-xL-HV-Rn	HV/MV Protective Relays
+kkt-yyyy-0A-xL-HV-Dn	HV Disconnector
+kkt-yyyy-0A-xL-HV-Sn	HV Surge Arrester
+kkt-yyyy-0A-xL-HV-An	HV M&P Transformers CT
+kkt-yyyy-0A-xL-HV-Vn	HV M&P Transformers VT
+kkt-yyyy-0A-xL-HV-BS	HV Connection
+kkt-yyyy-0A-xL-HV-Mn	Energy Meter
+kkt-yyyy-0A-xL-OC	Civil Works
+kkt-yyyy-0A-xL-OL	Overhead Power Lines
+kkt-yyyy-0A-xL-UL	Underground Power Lines
+kkt-yyyy-0A-xS	HV Busbar
+kkt-yyyy-0A-xS-HV	HV Section
+kkt-yyyy-0A-xS-HV-IT	HV Breaker/Circuit Breaker/HGIS
+kkt-yyyy-0A-xS-HV-Rn	HV/MV Protective Relays
+kkt-yyyy-0A-xS-HV-Dn	HV Disconnector
+kkt-yyyy-0A-xS-HV-Sn	HV Surge Arrester
+kkt-yyyy-0A-xS-HV-An	HV M&P Transformers CT
+kkt-yyyy-0A-xS-HV-Vn	HV M&P Transformers VT
+kkt-yyyy-0A-xS-HV-Cn	Capacitor Bank HV
+kkt-yyyy-0A-xS-HV-BS	HV Connection
+kkt-yyyy-0A-xS-HV-Mn	Energy Meter
+kkt-yyyy-0A-xS-OC	Civil Works
+kkt-yyyy-0A-LA	LV Auxiliary services power distribution
+kkt-yyyy-0A-LA-LP	DC LV Panel - uninterrupted
+kkt-yyyy-0A-LA-LP-nn	DC Low Voltage Panel nn
+kkt-yyyy-0A-LA-LN	AC LV Panel - normal and emergency p.s.
+kkt-yyyy-0A-LA-LN-nn	AC Low Voltage Panel nn
+kkt-yyyy-0A-LA-LU	AC LV Panel - uninterrupted 
+kkt-yyyy-0A-LA-LU-nn	AC Low Voltage Panel nn
+kkt-yyyy-0A-LA-SB	LV Switchboard
+kkt-yyyy-0A-LA-SB-nn	LV Switchboard nn
+kkt-yyyy-0A-LA-SG	LV Switchgear
+kkt-yyyy-0A-LA-SG-nn	LV Switchgear nn
+kkt-yyyy-0A-SA	Auxiliary service equipments
+kkt-yyyy-0A-SA-DG	Diesel Generator
+kkt-yyyy-0A-SA-EP	External Power Supply
+kkt-yyyy-0A-SA-BT	Batteries Bank
+kkt-yyyy-0A-SA-BT-nn	Batteries Bank nn
+kkt-yyyy-0A-SA-TR	Auxiliary service Transformer
+kkt-yyyy-0A-SA-TR-nn	Transformer nn
+kkt-yyyy-0A-SA-TS	Automatic Transfer Switch
+kkt-yyyy-0A-SA-TS-nn	Automatic Transfer Switch nn
+kkt-yyyy-0A-SA-UP	UPS
+kkt-yyyy-0A-SA-FC	HVAC
+kkt-yyyy-0A-RE	Rectifier AC/DC
+kkt-yyyy-0A-RE-nn	Rectifier AC/DC
+kkt-yyyy-0A-xM	MV Feeders Connection
+kkt-yyyy-0A-xM-MA	MV Section
+kkt-yyyy-0A-xM-MA-In	MV Circuit Breaker
+kkt-yyyy-0A-xM-MA-Dx	MV Disconnector
+kkt-yyyy-0A-xM-MA-Ax	MV M&P Transformers CT
+kkt-yyyy-0A-xM-MA-Vx	MV M&P Transformers VT
+kkt-yyyy-0A-xM-MA-Sx	MV Surge Arrester
+kkt-yyyy-0A-xM-MA-BS	MV Connection
+kkt-yyyy-0A-xM-MA-0x	Line protection
+kkt-yyyy-0A-xM-MA-Hx	Harmonic Filter
+kkt-yyyy-0A-xM-MA-ZR	Shunt Reactor
+kkt-yyyy-0A-xM-MA-Zn	Zig Zag Earthing Transformer
+kkt-yyyy-0A-xM-MA-ER	Earthing Reactor
+kkt-yyyy-0A-xM-MA-Cx	Capacitor Bank MV
+kkt-yyyy-0A-xM-MA-Mx	Energy Meter
+kkt-yyyy-0A-xM-OC	Civil Works
+kkt-yyyy-0A-xM-OL	Overhead Power Lines
+kkt-yyyy-0A-xM-UL	Underground Power Lines

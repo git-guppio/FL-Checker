@@ -1,0 +1,87 @@
+FL	Description
+kkS	IsoCode Country + Technology (S)
+kkS-yyyy	Plant code 
+kkS-yyyy-yn	PCU_<ID_FIELD> 
+kkS-yyyy-yn-OC	Civil Works
+kkS-yyyy-yn-OC-WS	Sheaths
+kkS-yyyy-yn-OC-MF	Metallic frame
+kkS-yyyy-yn-OC-FO	Foundations
+kkS-yyyy-yn-OC-MR	Dirt Work
+kkS-yyyy-yn-MV	MV Section
+kkS-yyyy-yn-MV-CL	MV cables
+kkS-yyyy-yn-MV-IT	MV Switchgear
+kkS-yyyy-yn-MV-PR	MV Protective Systems
+kkS-yyyy-yn-MV-SZ	MV On Load Transformer Switch
+kkS-yyyy-yn-CE	Energy Meters
+kkS-yyyy-yn-CE-CA	Auxiliary meter
+kkS-yyyy-yn-CE-CR	AC Revenue Meter
+kkS-yyyy-yn-LV	LV Section
+kkS-yyyy-yn-LV-CL	LV cables
+kkS-yyyy-yn-LV-LA	LV Auxiliary section
+kkS-yyyy-yn-LV-LA-IT	Auxiliary general breaker
+kkS-yyyy-yn-LV-LA-UP	UPS Circuits
+kkS-yyyy-yn-LV-LA-UN	Normal AC Circuits
+kkS-yyyy-yn-LV-LA-TR	Auxiliary service transformer
+kkS-yyyy-yn-LV-LP	Parallel LV section
+kkS-yyyy-yn-LV-LP-IT	Parallel general breaker
+kkS-yyyy-yn-LV-LP-TK	Metallic tank 
+kkS-yyyy-yn-LV-LP-PI	Relay parallel protection
+kkS-yyyy-yn-LV-LP-QG	LV Cabling to SU Transformer
+kkS-yyyy-yn-LV-LP-CO	Consumables
+kkS-yyyy-yn-LV-LP-pp	Inverter nn Output Circuit breaker
+kkS-yyyy-yn-CS	Charging Station
+kkS-yyyy-yn-UP	UPS
+kkS-yyyy-yn-FC	Container HVAC
+kkS-yyyy-yn-CL	Underground Cables and Overhead Power Lines
+kkS-yyyy-yn-FP	Floating platform
+kkS-yyyy-yn-FP-F1	Floating elements
+kkS-yyyy-yn-FP-F2	Anchors
+kkS-yyyy-yn-ST	Support Structures
+kkS-yyyy-yn-ST-S1	Metallic parts
+kkS-yyyy-yn-ST-S2	Concrete foundations and pillings
+kkS-yyyy-yn-ST-S4	Grounding system
+kkS-yyyy-yn-ST-S6	Panel Fixed Metal Structure
+kkS-yyyy-yn-TT	Tracker System
+kkS-yyyy-yn-TS	Arrays anti-tefts system
+kkS-yyyy-yn-TS-TA	Active Anti Tefts system
+kkS-yyyy-yn-TS-TS	Passive Anti Tefts system
+kkS-yyyy-yn-TC	SCADA System
+kkS-yyyy-yn-TC-AP	Scada devices
+kkS-yyyy-yn-TC-LN	Internal LAN
+kkS-yyyy-yn-TC-SM	Met sensors
+kkS-yyyy-yn-TC-SM-IR	Irradiance
+kkS-yyyy-yn-TC-SM-TA	Ambient Temperature
+kkS-yyyy-yn-TC-SM-TM	Module Temperature sensor
+kkS-yyyy-yn-TC-SM-PR	Ambient Pressure
+kkS-yyyy-yn-TC-SM-HU	Hummidity
+kkS-yyyy-yn-TC-SM-WI	Wind intensity
+kkS-yyyy-yn-TC-SM-WU	Wind direction
+kkS-yyyy-yn-TC-SM-RI	Rain intensity sensor
+kkS-yyyy-yn-TC-SM-MS	Met station power supply
+kkS-yyyy-yn-TC-SM-SO	Soiling sensor
+kkS-yyyy-yn-TC-SM-WE	Multipurpose weather sensor
+kkS-yyyy-yn-TC-SM-BI	Back Irradiance
+kkS-yyyy-yn-Tn	PCU_nn_LV/MV Transformer_n
+kkS-yyyy-yn-Tn-PT	Transformer protective system
+kkS-yyyy-yn-nn	PCU_<ID_FIELD>_INV_<ID_INV>
+kkS-yyyy-yn-nn-Tn	LV/LV Field Transformer
+kkS-yyyy-yn-nn-FU	Fuse Combiner
+kkS-yyyy-yn-nn-D1	DC section
+kkS-yyyy-yn-nn-D1-MP	MPPT control system
+kkS-yyyy-yn-nn-D1-GI	Ground Impedence system
+kkS-yyyy-yn-nn-AC	AC section
+kkS-yyyy-yn-nn-AC-GC	Convertion group
+kkS-yyyy-yn-nn-AC-IP	Interface Protection System
+kkS-yyyy-yn-nn-IS	Isolation Transformer
+kkS-yyyy-yn-nn-CO	Consumables
+kkS-yyyy-yn-nn-AR	Cooling Fans
+kkS-yyyy-yn-nn-TK	Metallic tank 
+kkS-yyyy-yn-nn-HI	Human machine interface
+kkS-yyyy-yn-nn-DS	DC Disconnect Switch
+kkS-yyyy-yn-nn-IT	AC Breaker
+kkS-yyyy-yn-nn-PS	External Power supply
+kkS-yyyy-yn-nn-RC	Remote communication 
+kkS-yyyy-yn-nn-nn	Combiner nn
+kkS-yyyy-yn-nn-nn-01	PV Strings
+kkS-yyyy-yn-nn-nn-MS	Panel Fixed Metal Structure
+kkS-yyyy-yn-nn-nn-TT	Tracker System

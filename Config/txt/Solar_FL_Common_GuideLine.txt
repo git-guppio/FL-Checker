@@ -1,0 +1,63 @@
+FL	Description	
+kkS	IsoCode Country + Technology (S)	
+kkS-yyyy	Plant code 	
+kkS-yyyy-00	Common Infrastructures and services	
+kkS-yyyy-00-PV	PV system	
+kkS-yyyy-00-PV-CL	wiring and cabling	
+kkS-yyyy-00-PV-SC	wiring and solar connections	
+kkS-yyyy-00-PV-CC	connectors	
+kkS-yyyy-00-PV-SM	solar modules	
+kkS-yyyy-00-VC	Buildings, Areas and Roads	
+kkS-yyyy-00-VC-BU	buildings	
+kkS-yyyy-00-VC-FE	fences and gates	
+kkS-yyyy-00-VC-GA	green areas	
+kkS-yyyy-00-VC-RO	internal roads	
+kkS-yyyy-00-IL	Overhead lighting	
+kkS-yyyy-00-IL-LU	luminaries	
+kkS-yyyy-00-IL-LS	lamps	
+kkS-yyyy-00-IL-PL	poles	
+kkS-yyyy-00-IL-CL	LV cables	
+kkS-yyyy-00-IT	Communications System	
+kkS-yyyy-00-SS	Plant Security System	
+kkS-yyyy-00-SS-VS	Videosurveillance system	
+kkS-yyyy-00-SS-IR	Anti intrusion system	
+kkS-yyyy-00-IC	Internal Communications	
+kkS-yyyy-00-IC-HT	Telephone Devices	
+kkS-yyyy-00-TC	SCADA System	
+kkS-yyyy-00-TC-LN	Internal LAN	
+kkS-yyyy-00-TC-AP	Scada Devices	
+kkS-yyyy-00-TC-SM	Permanent Met Towers	
+kkS-yyyy-00-TC-SM-IR	Irradiance	
+kkS-yyyy-00-TC-SM-PR	Ambient Pressure	
+kkS-yyyy-00-TC-SM-TA	Ambient Temperature	
+kkS-yyyy-00-TC-SM-TM	Module Temperature sensor	
+kkS-yyyy-00-TC-SM-HU	Hummidity	
+kkS-yyyy-00-TC-SM-WI	Wind intensity	
+kkS-yyyy-00-TC-SM-WU	Wind direction	
+kkS-yyyy-00-TC-SM-RI	Rain intensity sensor	
+kkS-yyyy-00-TC-HI	Human machine interface	
+kkS-yyyy-00-FF	Fire Protection System	
+kkS-yyyy-00-GG	Grounding grid	
+kkS-yyyy-00-AS	Anti rodent system	
+kkS-yyyy-00-CL	Underground Cables and Overhead Power Lines	
+kkS-yyyy-00-CL-MC	MV cables	
+kkS-yyyy-00-CL-JC	MV junctions and connections	
+kkS-yyyy-00-CL-CT	Cable trays	
+kkS-yyyy-00-Tn	LV/MV Field Transformer	
+kkS-yyyy-00-OC	Civil Works	
+kkS-yyyy-00-OC-WS	Sheaths	
+kkS-yyyy-00-OC-MF	Metallic frame	
+kkS-yyyy-00-OC-FO	Foundations	
+kkS-yyyy-00-OC-MR	Dirt Work	
+kkS-yyyy-ZZ	Systems and Various Equipment	
+kkS-yyyy-ZZ-GE	Generator Group	
+kkS-yyyy-ZZ-VB	Systems and Various Equipment	
+kkS-yyyy-ZZ-VD	Water Network and Sanitation	
+kkS-yyyy-0A	Common Energy Collecting & Delivery System	
+kkS-yyyy-9Z	Logistic tools	
+kkS-yyyy-9Z-01	Tools for workshop and laboratory	
+kkS-yyyy-9Z-02	Office furniture	
+kkS-yyyy-9Z-03	Office machinery	
+kkS-yyyy-9Z-04	Special vehicles	
+kkS-yyyy-9Z-05	Computers, printers and other	
+kkS-yyyy-9Z-06	Safety equipment	

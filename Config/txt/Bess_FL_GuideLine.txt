@@ -1,0 +1,153 @@
+FL	Description
+kkE	IsoCode Country + Technology (E)
+kkE-yyyy	Name of the plant
+kkE-yyyy-0A	Common Energy Collecting & Delivery Syst
+kkE-yyyy-00	Common Infrastructures and services
+kkE-yyyy-00-VC	Buildings, Areas and Roads
+kkE-yyyy-00-VC-BU	Buildings
+kkE-yyyy-00-VC-FE	Fences and gates
+kkE-yyyy-00-VC-GA	Green areas
+kkE-yyyy-00-VC-RO	Internal roads
+kkE-yyyy-00-IL	Overhead lighting
+kkE-yyyy-00-IL-LU	Luminaries
+kkE-yyyy-00-IL-LS	Lamps
+kkE-yyyy-00-IL-PL	Poles
+kkE-yyyy-00-IL-CL	LV cables
+kkE-yyyy-00-IT	Communications System
+kkE-yyyy-00-SS	Plant Security System
+kkE-yyyy-00-SS-VS	Videosurveillance system
+kkE-yyyy-00-SS-IR	Anti intrusion system
+kkE-yyyy-00-IC	Internal Communications 
+kkE-yyyy-00-TC	SCADA System
+kkE-yyyy-00-TC-LN	Internal LAN
+kkE-yyyy-00-TC-AP	Scada Devices
+kkE-yyyy-00-TC-SM	Permanent Met Towers
+kkE-yyyy-00-TC-HI	Human machine interface
+kkE-yyyy-00-GG	Grounding grid
+kkE-yyyy-00-AS	Anti rodent system
+kkE-yyyy-00-CL	Underground Cables and Overhead Pwr Line
+kkE-yyyy-00-CL-MC	MV cables
+kkE-yyyy-00-CL-JC	MV junctions and connections
+kkE-yyyy-00-CL-CT	Cable trays
+kkE-yyyy-00-OC	Civil Works
+kkE-yyyy-00-OC-FO	Foundations
+kkE-yyyy-00-OC-MR	Dirt Work
+kkE-yyyy-00-FF	Fire Protection System
+kkE-yyyy-00-FF-DP	Dry-Pipe
+kkE-yyyy-00-FF-CP	Fire fighting Control panel
+kkE-yyyy-00-FF-ES	Extinguishing agent storage system
+kkE-yyyy-0E	Bess Common
+kkE-yyyy-0E-SA	BESS Dedicated Auxiliary System
+kkE-yyyy-0E-SA-DG	Backup Generator
+kkE-yyyy-0E-SA-TS	AutomaticTransferSwitch (ATS)
+kkE-yyyy-0E-SA-UP	UPS
+kkE-yyyy-0E-SA-TR	Ausiliary Transformer
+kkE-yyyy-0E-SA-IT	Circuit Breaker
+kkE-yyyy-0E-SA-EP	External Power Supply
+kkE-yyyy-0E-SA-ME	Auxiliary Meters
+kkE-yyyy-0E-N0	BESS Control System
+kkE-yyyy-0E-N0-SC	BESS SCADA
+kkE-yyyy-0E-N0-SW	Switch-router
+kkE-yyyy-0E-N0-CC	Control Card
+kkE-yyyy-0E-N0-HM	HMI
+kkE-yyyy-0E-N0-CM	Communication cable
+kkE-yyyy-0E-N0-PL	Centralized Safety PLC
+kkE-yyyy-0E-N0-HV	HVAC
+kkE-yyyy-0E-N0-FD	Fire Detection
+kkE-yyyy-0E-N0-FS	Fire fighing (sprinkler & agent storage)
+kkE-yyyy-xE	Feeder_n
+kkE-yyyy-xE-CE	Feeder_n BESS Energy Meters
+kkE-yyyy-xE-MV	MV Section
+kkE-yyyy-xE-MV-CL	MV cables
+kkE-yyyy-xE-MV-PR	MV Protective Relays
+kkE-yyyy-xE-MV-In	Storage unit MV Breaker/Switchgear
+kkE-yyyy-xE-MV-In-AT	MV M&P Transformer - Current Transformer
+kkE-yyyy-xE-MV-In-VT	MV M&P Transformer - Voltage Transformer
+kkE-yyyy-xE-TR	Storage unit Trasformers
+kkE-yyyy-xE-TR-Tn	Transformer (of the Storage Unit n)
+kkE-yyyy-xE-TR-Tn-PT	Transformer protective system
+kkE-yyyy-xE-TR-Tn-FA	Fans
+kkE-yyyy-xE-TR-Tn-OP	Oil Pumps
+kkE-yyyy-xE-TR-Tn-RA	Radiator
+kkE-yyyy-xE-TR-Tn-SW	Switches
+kkE-yyyy-xE-TR-Tn-GA	Gauges
+kkE-yyyy-xE-LV	LV Section
+kkE-yyyy-xE-LV-CL	LV cables
+kkE-yyyy-xE-nn	Storage Unit Field_nn
+kkE-yyyy-xE-nn-CE	BESS Energy Meters
+kkE-yyyy-xE-nn-00	Common of PCS
+kkE-yyyy-xE-nn-00-CP	Fire fighting Control panel 
+kkE-yyyy-xE-nn-00-PL	Safety PLC Cabinet
+kkE-yyyy-xE-nn-00-CH	PCS Chiller
+kkE-yyyy-xE-nn-Pm	PCS Inverter
+kkE-yyyy-xE-nn-Pm-PM	Power Module
+kkE-yyyy-xE-nn-Pm-FU	Fuse Combiner
+kkE-yyyy-xE-nn-Pm-GI	Ground Impedence system
+kkE-yyyy-xE-nn-Pm-DC	DC Section
+kkE-yyyy-xE-nn-Pm-AC	AC Section
+kkE-yyyy-xE-nn-Pm-AR	Cooling Fans
+kkE-yyyy-xE-nn-Pm-TK	PCS Enclosure
+kkE-yyyy-xE-nn-Pm-HI	Human machine interface
+kkE-yyyy-xE-nn-Pm-DS	DC Disconnect Switch
+kkE-yyyy-xE-nn-Pm-PS	External Power supply
+kkE-yyyy-xE-nn-Pm-RC	Remote communication 
+kkE-yyyy-xE-nn-Pm-LC	Liquid Cooling System
+kkE-yyyy-xE-nn-Cm-AC	Array Controller
+kkE-yyyy-xE-nn-Cm-CL	Cable
+kkE-yyyy-xE-nn-Cm-CP	Container Fire fighting Control panel 
+kkE-yyyy-xE-nn-Cm-DS	Door Switch
+kkE-yyyy-xE-nn-Cm-EN	Enclosure structure
+kkE-yyyy-xE-nn-Cm-FD	Fire Detection
+kkE-yyyy-xE-nn-Cm-FS	Fire Figthing (sprinker & agent storage)
+kkE-yyyy-xE-nn-Cm-GI	Ground Impedence System
+kkE-yyyy-xE-nn-Cm-HV	HVAC
+kkE-yyyy-xE-nn-Cm-LC	Liquid Cooling System
+kkE-yyyy-xE-nn-Cm-MS	Master Battery Control System (MBMS)
+kkE-yyyy-xE-nn-Cm-OC	Civil Work
+kkE-yyyy-xE-nn-Cm-PL	Container Safety PLC
+kkE-yyyy-xE-nn-Cm-SA	Auxiliary distribution box
+kkE-yyyy-xE-nn-Cm-UP	UPS
+kkE-yyyy-xE-nn-Cm	Battery Container & Ancillary system
+kkE-yyyy-xE-nn-Bm	Battery Bank
+kkE-yyyy-xE-nn-Bm-BM	Battery Racks/Strings
+kkE-yyyy-xE-nn-Bm-BS	Battery Management System (BMS)
+kkE-yyyy-xE-nn-Bm-CB	Battery Control Box
+kkE-yyyy-xE-nn-Bm-BC	Battery Combiner
+kkE-yyyy-WE	Bess Common West/North
+kkE-yyyy-WE-SA	BESS Dedicated Auxiliary System
+kkE-yyyy-WE-SA-DG	Backup Generator
+kkE-yyyy-WE-SA-TS	AutomaticTransferSwitch (ATS)
+kkE-yyyy-WE-SA-UP	UPS
+kkE-yyyy-WE-SA-TR	Ausiliary Transformer
+kkE-yyyy-WE-SA-IT	Circuit Breaker
+kkE-yyyy-WE-SA-EP	External Power Supply
+kkE-yyyy-WE-SA-ME	Auxiliary Meters
+kkE-yyyy-WE-N0	BESS Control System
+kkE-yyyy-WE-N0-SC	BESS SCADA
+kkE-yyyy-WE-N0-SW	Switch-router
+kkE-yyyy-WE-N0-CC	Control Card
+kkE-yyyy-WE-N0-HM	HMI
+kkE-yyyy-WE-N0-CM	Communication cable
+kkE-yyyy-WE-N0-PL	Centralized Safety PLC
+kkE-yyyy-WE-N0-HV	HVAC
+kkE-yyyy-WE-N0-FD	Fire Detection
+kkE-yyyy-WE-N0-FS	Fire fighing (sprinkler & agent storage)
+kkE-yyyy-ZE	Bess Common East/South
+kkE-yyyy-ZE-SA	BESS Dedicated Auxiliary System
+kkE-yyyy-ZE-SA-DG	Backup Generator
+kkE-yyyy-ZE-SA-TS	AutomaticTransferSwitch (ATS)
+kkE-yyyy-ZE-SA-UP	UPS
+kkE-yyyy-ZE-SA-TR	Ausiliary Transformer
+kkE-yyyy-ZE-SA-IT	Circuit Breaker
+kkE-yyyy-ZE-SA-EP	External Power Supply
+kkE-yyyy-ZE-SA-ME	Auxiliary Meters
+kkE-yyyy-ZE-N0	BESS Control System
+kkE-yyyy-ZE-N0-SC	BESS SCADA
+kkE-yyyy-ZE-N0-SW	Switch-router
+kkE-yyyy-ZE-N0-CC	Control Card
+kkE-yyyy-ZE-N0-HM	HMI
+kkE-yyyy-ZE-N0-CM	Communication cable
+kkE-yyyy-ZE-N0-PL	Centralized Safety PLC
+kkE-yyyy-ZE-N0-HV	HVAC
+kkE-yyyy-ZE-N0-FD	Fire Detection
+kkE-yyyy-ZE-N0-FS	Fire fighing (sprinkler & agent storage)

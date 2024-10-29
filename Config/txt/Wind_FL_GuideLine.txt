@@ -1,0 +1,118 @@
+FL	Description
+kkW	IsoCode Country + Technology (W)
+kkW-yyyy	Plant code 
+kkW-yyyy-00	Common Infrastructures
+kkW-yyyy-00-VC	Building, Areas and Roads
+kkW-yyyy-00-VC-WH	Warehouse/Workshop
+kkW-yyyy-00-VC-BU	Buildings
+kkW-yyyy-00-VC-AR	Areas/Roads
+kkW-yyyy-00-IC	Internal Communications
+kkW-yyyy-00-IC-HT	Telephone Devices
+kkW-yyyy-00-IC-RD	Radio system
+kkW-yyyy-00-IC-WX	Weather system
+kkW-yyyy-00-TC	SCADA System
+kkW-yyyy-00-TC-FO	Fiber Optics
+kkW-yyyy-00-TC-CC	Other communication channels
+kkW-yyyy-00-TC-AP	SCADA Devices
+kkW-yyyy-00-TC-CS	Plant Scada
+kkW-yyyy-00-TC-SS	SET Scada
+kkW-yyyy-00-MA	O&M Machinery
+kkW-yyyy-00-SM	Permanent Met Towers
+kkW-yyyy-00-FF	Fire Protection System
+kkW-yyyy-00-HS	Health and safety equipment
+kkW-yyyy-00-GG	Ground Network
+kkW-yyyy-00-PL	Power Connection Line
+kkW-yyyy-00-FA	Intruder Alarm System
+kkW-yyyy-0A	Common Energy Collecting & Delivery System
+kkW-yyyy-Xn	Bays X String n
+kkW-yyyy-Xn-IT	MV Breaker
+kkW-yyyy-Xn-SZ	MV Air Breaker
+kkW-yyyy-Xn-PR	MV Protective Relays
+kkW-yyyy-Xn-CB	Capacitor Battery
+kkW-yyyy-Xn-CL	Underground Cables and Overhead Power Lines
+kkW-yyyy-Xn-CE	Energy Meters
+kkW-yyyy-Xn-T1	String Transformer 
+kkW-yyyy-Xn-GG	Grounding grid
+kkW-yyyy-Xn-XX	Wind Turbine Generator XX
+kkW-yyyy-Xn-XX-MV	MV Section of the WTG
+kkW-yyyy-Xn-XX-MV-CB	Capacitor Battery
+kkW-yyyy-Xn-XX-CE	Energy Meters
+kkW-yyyy-Xn-XX-TA	MV/LV Transformer of the WTG
+kkW-yyyy-Xn-XX-TA-ES	Electronic & signals
+kkW-yyyy-Xn-XX-TA-MM	Mechanical Parts
+kkW-yyyy-Xn-XX-TA-SP	Power Section and auxiliaries
+kkW-yyyy-Xn-XX-OC	Civil Works WTG
+kkW-yyyy-Xn-XX-DP	Protection and Safety Devices
+kkW-yyyy-Xn-XX-DP-DL	Descenders, climb assist  and Life Lines
+kkW-yyyy-Xn-XX-DP-FF	Fire Protection System
+kkW-yyyy-Xn-XX-DP-BQ	Obstacles Aviation Lights
+kkW-yyyy-Xn-XX-DP-LE	Emergency Lights
+kkW-yyyy-Xn-XX-DP-AF	Intruder Alarm System
+kkW-yyyy-Xn-XX-DP-EM	Emergency stops
+kkW-yyyy-Xn-XX-DP-ED	Enviromental detection
+kkW-yyyy-Xn-XX-DP-LP	Lightning protection
+kkW-yyyy-Xn-XX-TO	Tower
+kkW-yyyy-Xn-XX-TO-SP	Tower Main Structure
+kkW-yyyy-Xn-XX-TO-SC	Ladder
+kkW-yyyy-Xn-XX-TO-AS	Elevator
+kkW-yyyy-Xn-XX-NC	Nacelle
+kkW-yyyy-Xn-XX-NC-SP	Chassis
+kkW-yyyy-Xn-XX-NC-RI	Covering
+kkW-yyyy-Xn-XX-NC-MA	Hoists and Winches
+kkW-yyyy-Xn-XX-RT	Rotor
+kkW-yyyy-Xn-XX-RT-PA	Blades
+kkW-yyyy-Xn-XX-RT-MO	Hub and Nose Cone
+kkW-yyyy-Xn-XX-RT-GR	Grease system
+kkW-yyyy-Xn-XX-RT-BB	Blade bearing
+kkW-yyyy-Xn-XX-RT-HG	Hydr. Sys Actuation TIP
+kkW-yyyy-Xn-XX-RT-TI	Actuation TIP
+kkW-yyyy-Xn-XX-PS	Pitch System
+kkW-yyyy-Xn-XX-PS-ES	Electrical. Pitch system
+kkW-yyyy-Xn-XX-PS-PO	Position Pitch system
+kkW-yyyy-Xn-XX-PS-HG	Hydr. Sys. Pitch System
+kkW-yyyy-Xn-XX-HG	Hydraulic System
+kkW-yyyy-Xn-XX-HG-ES	Electronic & Signals
+kkW-yyyy-Xn-XX-HG-PU	Patch cords & unions
+kkW-yyyy-Xn-XX-AL	Main Shaft
+kkW-yyyy-Xn-XX-AL-MB	Main bearings
+kkW-yyyy-Xn-XX-AL-GR	Grease system
+kkW-yyyy-Xn-XX-ML	Gearbox
+kkW-yyyy-Xn-XX-ML-RF	Gearbox Cooling System
+kkW-yyyy-Xn-XX-ML-MM	Gearbox Mechanical Parts
+kkW-yyyy-Xn-XX-ML-ES	Electronic & Signals
+kkW-yyyy-Xn-XX-GV	High Speed Shaft
+kkW-yyyy-Xn-XX-FR	Brake System
+kkW-yyyy-Xn-XX-FR-HG	Hydr. Sys. Mechanical Brake
+kkW-yyyy-Xn-XX-FR-BP	Break pads
+kkW-yyyy-Xn-XX-FR-FS	Frame system
+kkW-yyyy-Xn-XX-SI	Yaw System
+kkW-yyyy-Xn-XX-SI-HG	Hydr. Sys. Yaw Brake
+kkW-yyyy-Xn-XX-SI-RI	Yaw Gears
+kkW-yyyy-Xn-XX-SI-FE	Yaw Brakes
+kkW-yyyy-Xn-XX-SI-ME	Yaw Electric Motors
+kkW-yyyy-Xn-XX-SI-GR	Grease system
+kkW-yyyy-Xn-XX-GE	Generator
+kkW-yyyy-Xn-XX-GE-RF	Generator Cooling System
+kkW-yyyy-Xn-XX-GE-CU	Generator Bearings
+kkW-yyyy-Xn-XX-GE-GS	Slip Ring Set
+kkW-yyyy-Xn-XX-GE-CP	Power Control Devices
+kkW-yyyy-Xn-XX-GE-ES	Electronic & Signals
+kkW-yyyy-Xn-XX-GE-MM	Generator Mechanical Parts
+kkW-yyyy-Xn-XX-GE-GR	Grease system
+kkW-yyyy-Xn-XX-CF	Frequency Converters
+kkW-yyyy-Xn-XX-CF-RF	Frequency Converter Cooling System
+kkW-yyyy-Xn-XX-CF-ES	Electronic & Signals
+kkW-yyyy-Xn-XX-CF-SP	Power Section and auxiliaries
+kkW-yyyy-Xn-XX-CF-VD	Voltage Dips
+kkW-yyyy-Xn-XX-QB	Ground Controller
+kkW-yyyy-Xn-XX-QB-ES	Electronic & Signals
+kkW-yyyy-Xn-XX-QB-SP	Power Section and auxiliaries
+kkW-yyyy-Xn-XX-QN	Top Controller
+kkW-yyyy-Xn-XX-QN-ES	Electronic & Signals
+kkW-yyyy-Xn-XX-QN-SP	Power Section and auxiliaries
+kkW-yyyy-Xn-XX-QN-MS	Monitoring systems
+kkW-yyyy-Xn-XX-QM	Hub Controller
+kkW-yyyy-Xn-XX-QM-ES	Electronic & Signals
+kkW-yyyy-Xn-XX-QM-SP	Power Section and auxiliaries
+kkW-yyyy-Xn-XX-CV	Power & Signal Cables
+kkW-yyyy-Xn-XX-ST	WTG SCADA System

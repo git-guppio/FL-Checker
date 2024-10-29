@@ -1,0 +1,56 @@
+; Programma principale
+; Descrizione: Utilizza l'event manager per coordinare le attività tra i diversi componenti del programma, inizializza e configura tutti i componenti dell'applicazione.
+; Esempio:
+
+#Requires AutoHotkey v2.0
+#SingleInstance Force
+
+#Include EventManager.ahk
+#Include FLChecker.ahk
+#Include GUI\MakeMainGUI.ahk
+/* #Include GUI\MakeInvTecGUI.ahk
+#Include SAP\SAP_Connection.ahk
+#Include SAP\SAP_TableChecker.ahk
+#Include Utils\ProgressIndicator.ahk */
+
+Main()
+
+Main() {
+    ; Inizializzazione dei componenti principali
+    MyFlChecker := FLChecker()
+    MyMainGUI := MakeMainGUI(MyFlChecker)
+/*     invTecGUI := InvTecGUI(flChecker)
+    tableCheckerSAP := TableCheckerSAP(flChecker)
+    progressIndicator := ProgressIndicator(mainGUI) */
+
+    ; Configurazione delle sottoscrizioni agli eventi
+    EventManager.Subscribe("CheckFLRequested", (*) => MyFlChecker.CheckFL())
+    EventManager.Subscribe("ClearAll", (*) => MyMainGUI.ClearAll())
+    EventManager.Subscribe("Debug", (message) => Debug(message)) 
+/*     EventManager.Subscribe("UploadRequested", (*) => tableCheckerSAP.UploadFiles())
+    EventManager.Subscribe("ProgressUpdate", (message) => progressIndicator.Update(message))
+    EventManager.Subscribe("ShowInvTecGUI", (*) => invTecGUI.Show())
+
+
+    EventManager.Subscribe("ShowInvTecGUI", (*) => invTecGUI.Show())
+    EventManager.Subscribe("ShowInvTecGUI", (*) => invTecGUI.Show())
+
+
+    ; Sottoscrizioni relative al ProgressIndicator
+    EventManager.Subscribe("ChangeIndicatorType", (*) => progressIndicator.ChangeIndicatorType())
+    EventManager.Subscribe("StartIndicator", (message) => progressIndicator.Start(message))
+    EventManager.Subscribe("StopIndicator", (*) => progressIndicator.Stop())
+    
+*/
+
+    ; Avvio dell'applicazione
+    MyMainGUI.Show()
+}
+
+Debug(Text, Clear := 1, LineBreak := 1, Exit := 0) {
+    if not A_IsCompiled	{
+        LineBreak = 1 ? Text .= "`n" : Text
+        OutputDebug(Text)
+        }
+    return
+}
