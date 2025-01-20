@@ -17,54 +17,142 @@ class SAP_UpLoadTable {
         EventManager.Subscribe("UpLoadFiles", (*) => SAP_UpLoadTable.UpLoadFiles())
     }
 
-    ; Metodo: UpLoadLivello_2_SAP
-    ; Descrizione: Esegue l'UpLoad in SAP del valore del secondo livello nella tabella globale
+    ; Metodo: UpLoadFiles
+    ; Descrizione: Esegue l'UpLoad in SAP dei file csv presenti nella cartella <FileUpLoad>
     ; Parametri:
     ; Restituisce:
     ;   - true se l'operazione va a buon fine
     ;   - false altrimenti
     ; Esempio: UpLoadSecondoLivello_SAP("USS8")
     static UpLoadFiles() {
+        ; variabili per memorizzare file di cui si esegue l'upload e l'esito del caricamento.
+        Map_FileUploaded := map()
+        esito := false
+
         UpLoadFiles_result := { success: false, value: false, error: "", class: "SAP_UpLoadTable.ahk", function: "UpLoadFiles" }
         EventManager.Publish("ProcessStarted", {processId: UpLoadFiles_result.function, status: "Started", details: "Avvio funzione", result: {}})
         EventManager.Publish("PI_Start", {inputValue: "Caricamento tabelle globali SAP "}) ; Avvia l'indicatore di progresso
-        UpLoadFiles_result.value := 0
-        if (FileExist(G_CONSTANTS.file_FL_2_UpLoad)) { ; se il file non è stato creato allora non devo caricarlo
-            EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: "Caricamento file 2° livello", result: {}})
-            if (SAP_UpLoadTable.UpLoadLivello_2_SAP()) {
-                EventManager.Publish("AddLV", {icon: "icon1", element: "FL_2_UpLoad.csv", text: "File di livello 2 caricato con successo"})
-                EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: "Caricamento file 2° livello - OK", result: {}})
-                UpLoadFiles_result.value := 1
-            } else {
-                EventManager.Publish("AddLV", {icon: "icon3", element: "FL_2_UpLoad.csv", text: "Errore nel caricamento del file di livello 2"})
-                EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: "Errore nel caricamento del file di livello 2", result: {}})
-                EventManager.Publish("PI_Stop", {inputValue: "Errore nel caricamento tabelle globali SAP"}) ; Ferma l'indicatore di progresso
+        
+        if (FileExist(G_CONSTANTS.file_FL_2_UpLoad)) { ; se il file esiste -> lo carico
+            NameFile_Path := SAP_UpLoadTable.SeparateFilePathAndName(G_CONSTANTS.file_FL_2_UpLoad)          
+            MsgBoxResult := MsgBox("Caricare il file " . NameFile_Path.fileName . "? (press Si or No)","UpLoad Global SAP table", 4132)
+            if (MsgBoxResult = "Yes") {            
+                EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: "Caricamento file 2° livello", result: {}})
+                ; ---> carico file FL_2_UpLoad.csv
+
+                if (SAP_UpLoadTable.UpLoadLivello_2_SAP()) {
+                    msgInfo := "File di livello 2 caricato con successo"
+                    EventManager.Publish("AddLV", {icon: "icon1", element: NameFile_Path.fileName, text: msgInfo})
+                    EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: msgInfo, result: {}})
+                    esito := true
+                } else {
+                    msgError := "Errore nel caricamento del file di livello 2"
+                    EventManager.Publish("AddLV", {icon: "icon3", element: NameFile_Path.fileName, text: msgError})
+                    EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: msgError, result: {}})
+                    EventManager.Publish("PI_Stop", {inputValue: msgError}) ; Ferma l'indicatore di progresso
+                    esito := false
+                }
+                Map_FileUploaded[NameFile_Path.fileName] := esito
+            }
+            else {
+            
             }
         }
 
-        if !(FileExist(G_CONSTANTS.file_FL_n_UpLoad)) ; se il file non è stato creato allora non devo caricarlo
-            return false
-        else {
-            if (SAP_UpLoadTable.UpLoadLivello_n_SAP()) {
-                EventManager.Publish("AddLV", {icon: "icon1", element: "FL_n_UpLoad.csv", text: "File di livello 2 caricato con successo"})
-                EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: "Caricamento file n livello - OK", result: {}})
-                UpLoadFiles_result.value += 1
-            } else {
-                EventManager.Publish("AddLV", {icon: "icon3", element: "FL_n_UpLoad.csv", text: "Errore nel caricamento del file di livello n"})
-                EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: "Errore nel caricamento del file di livello n", result: {}})
-                EventManager.Publish("PI_Stop", {inputValue: "Errore nel caricamento tabelle globali SAP"}) ; Ferma l'indicatore di progresso
+        if (FileExist(G_CONSTANTS.file_FL_n_UpLoad)) { ; se il file esiste -> lo carico
+            NameFile_Path := SAP_UpLoadTable.SeparateFilePathAndName(G_CONSTANTS.file_FL_n_UpLoad)          
+            MsgBoxResult := MsgBox("Caricare il file " . NameFile_Path.fileName . "? (press Si or No)","UpLoad Global SAP table", 4132)
+            if (MsgBoxResult = "Yes") {          
+                EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: "Caricamento file n° livello", result: {}})
+                ; ---> carico file FL_n_UpLoad.csv
+                if (SAP_UpLoadTable.UpLoadLivello_n_SAP()) {
+                    msgInfo := "File di livello n caricato con successo"
+                    EventManager.Publish("AddLV", {icon: "icon1", element: NameFile_Path.fileName, text: msgInfo})
+                    EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: msgInfo, result: {}})
+                    esito := true
+                } else {
+                    msgError := "Errore nel caricamento del file di livello n"
+                    EventManager.Publish("AddLV", {icon: "icon3", element: NameFile_Path.fileName, text: msgError})
+                    EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: msgError, result: {}})
+                    EventManager.Publish("PI_Stop", {inputValue: msgError}) ; Ferma l'indicatore di progresso
+                    esito := false
+                }
+                Map_FileUploaded[NameFile_Path.fileName] := esito
             }
+            else {
+            
+            }                
         }
-        OutputDebug("UpLoadFiles_result.value" . UpLoadFiles_result.value . "`n")
-        if (UpLoadFiles_result.value > 0) {
+
+        if (FileExist(G_CONSTANTS.file_ZPMR_CTRL_ASS_UpLoad)) { ; se il file esiste -> lo carico
+            NameFile_Path := SAP_UpLoadTable.SeparateFilePathAndName(G_CONSTANTS.file_ZPMR_CTRL_ASS_UpLoad)
+            MsgBoxResult := MsgBox("Caricare il file " . NameFile_Path.fileName . "? (press Si or No)","UpLoad SAP CTRL ASS table", 4132)
+            if (MsgBoxResult = "Yes") {
+                EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: "Caricamento file CTRL_ASS", result: {}})                
+                ; ---> carico file FL_n_UpLoad.csv
+                if (SAP_UpLoadTable.UpLoadCTRL_ASS()) {
+                    msgInfo := "File CTRL_ASS caricato con successo"
+                    EventManager.Publish("AddLV", {icon: "icon1", element: NameFile_Path.fileName, text: msgInfo})
+                    EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: msgInfo, result: {}})
+                    esito := true
+                } else {
+                    msgError := "Errore nel caricamento del file CTRL_ASS"
+                    EventManager.Publish("AddLV", {icon: "icon3", element: NameFile_Path.fileName, text: msgError})
+                    EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: msgError, result: {}})
+                    EventManager.Publish("PI_Stop", {inputValue: msgError}) ; Ferma l'indicatore di progresso
+                    esito := false
+                }
+                Map_FileUploaded[NameFile_Path.fileName] := esito
+            }
+            else {
+            
+            }                
+        }
+
+        if (FileExist(G_CONSTANTS.file_ZPMR_TECH_OBJ_UpLoad)) {  ; se il file esiste -> lo carico
+            NameFile_Path := SAP_UpLoadTable.SeparateFilePathAndName(G_CONSTANTS.file_ZPMR_TECH_OBJ_UpLoad)
+            MsgBoxResult := MsgBox("Caricare il file " . NameFile_Path.fileName . "? (press Si or No)","UpLoad SAP TECH OBJ table", 4132)
+            if (MsgBoxResult = "Yes") {
+                ; ---> carico file FL_n_UpLoad.csv
+                if (SAP_UpLoadTable.UpLoadTECH_OBJ()) {
+                    msgInfo := "File TECH_OBJ caricato con successo"
+                    EventManager.Publish("AddLV", {icon: "icon1", element: NameFile_Path.fileName, text: msgInfo})
+                    EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: msgInfo, result: {}})
+                    esito := true
+                } else {
+                    msgError := "Errore nel caricamento del file TECH_OBJ"
+                    EventManager.Publish("AddLV", {icon: "icon3", element: NameFile_Path.fileName, text: msgError})
+                    EventManager.Publish("ProcessProgress", {processId: UpLoadFiles_result.function, status: "In Progress", details: msgError, result: {}})
+                    EventManager.Publish("PI_Stop", {inputValue: msgError}) ; Ferma l'indicatore di progresso
+                    esito := false
+                }
+                Map_FileUploaded[NameFile_Path.fileName] := esito
+            }
+            else {
+            
+            }            
+        }
+
+        ; al termine del caricamento dei file         
+        countFileOK := 0
+        countFileNOK := 0
+        for file, esito in Map_FileUploaded {
+                msgInfo := "`t - " . file . " -> " . (esito=true ? " OK" : " NOK") . "`n"
+                esito=true ? countFileOK++ : countFileNOK++
+        }
+        totFile:=countFileOK+countFileNOK
+        UpLoadFiles_result.value := Map_FileUploaded
+        OutputDebug("UpLoadFiles_result - Esito upload dei file: `n" . msgInfo . "`n")
+        if (countFileOK > 0) {
             UpLoadFiles_result.success := true
-            details_txt := "Effettutato caricamento di " . UpLoadFiles_result.value . (UpLoadFiles_result.value = 1 ? "file" : "files")
-            EventManager.Publish("ProcessCompleted", {processId: UpLoadFiles_result.function, status: "Completed" , details: details_txt, result: UpLoadFiles_result})
-            EventManager.Publish("PI_Stop", {inputValue: "Caricamento tabelle globali SAP - OK"}) ; Ferma l'indicatore di progresso
+            msgInfo := "Effettutato caricamento di " . countFileOK . "su" . totFile . (totFile>1 ? "files":"file")
+            EventManager.Publish("ProcessCompleted", {processId: UpLoadFiles_result.function, status: "Completed" , details: msgInfo, result: UpLoadFiles_result})
+            EventManager.Publish("PI_Stop", {inputValue: "Caricamento file in SAP concluso. Esito= " . countFileOK . "/" . totFile}) ; Ferma l'indicatore di progresso
         }
-        else if (UpLoadFiles_result.value = 0) {
-            EventManager.Publish("ProcessError", {processId: UpLoadFiles_result.function, status: "Error", details: "Errore caricamento dei file", result: UpLoadFiles_result})
-            EventManager.Publish("PI_Stop", {inputValue: "Errore caricamento tabelle globali SAP"}) ; Ferma l'indicatore di progresso            
+        else if (countFileOK = 0) {
+            msgInfo := "Errore nel caricamento dei file in SAP - Nessun file caricato"
+            EventManager.Publish("ProcessError", {processId: UpLoadFiles_result.function, status: "Error" , details: msgInfo, result: UpLoadFiles_result})
+            EventManager.Publish("PI_Stop", {inputValue: msgInfo}) ; Ferma l'indicatore di progresso            
         }
     }    
 
@@ -151,6 +239,7 @@ class SAP_UpLoadTable {
                 MsgBox("Errore nell'esecuzione dell'azione SAP: " err.Message, "Errore", 4112)
                 return false
             }
+            SAPConnection.Disconnect()
         }
         else {
             MsgBox("Impossibile ottenere una sessione SAP valida.", "Errore", 4112)
@@ -206,10 +295,111 @@ class SAP_UpLoadTable {
                     MsgBox("Errore nell'esecuzione dell'azione SAP: " err.Message, "Errore", 4112)
                     return false
                 }
+                SAPConnection.Disconnect()
             }
             else {
                 MsgBox("Impossibile ottenere una sessione SAP valida.", "Errore", 4112)
                 return false
             }
     }
+
+    ; Metodo: UpLoadCTRL_ASS
+    ; Descrizione: Esegue l'UpLoad in SAP del file per l'aggiornamento della tabella CTRL_ASS
+    ; Parametri:
+    ; Restituisce:
+    ;   - true se l'operazione va a buon fine
+    ;   - false altrimenti
+    ; Esempio: UpLoadSecondoLivello_SAP("USS8")
+    Static UpLoadCTRL_ASS() {
+        result := this.SeparateFilePathAndName(G_CONSTANTS.file_ZPMR_CTRL_ASS_UpLoad)
+        OutputDebug("Eseguo UpLoad file: " . result.folderPath . " - " result.fileName . " - " . result.isCSV . "`n")
+        if !((result.isCSV) and (result.folderPath) and (result.fileName)) ; se il file ha estensione .csv ha un nome e un percorso allora procedo
+            return false
+            ; avvio una sessione SAP
+            session := SAPConnection.GetSession()
+            if (session) {
+                try {
+                    session.findById("wnd[0]/tbar[0]/okcd").text := "/nZPM4R_UPL_FL_FILE"
+                    session.findById("wnd[0]").sendVKey(0)
+                    session.findById("wnd[0]/usr/radR_BUT3").setFocus
+                    session.findById("wnd[0]/usr/radR_BUT3").select
+                    session.findById("wnd[0]/usr/chkP_INT").selected := true
+                    session.findById("wnd[0]/usr/ctxtP_FILE").setFocus
+                    session.findById("wnd[0]/usr/ctxtP_FILE").caretPosition := 0
+                    session.findById("wnd[0]").sendVKey(4)
+                    session.findById("wnd[1]/usr/ctxtDY_PATH").text := result.folderPath
+                    session.findById("wnd[1]/usr/ctxtDY_FILENAME").text := result.fileName
+                    session.findById("wnd[1]/usr/ctxtDY_FILENAME").caretPosition := 17
+                    session.findById("wnd[1]/tbar[0]/btn[0]").press
+                    sleep 500
+                    ; OK carica file                    
+                    session.findById("wnd[0]/tbar[1]/btn[8]").press
+                    ;session.findById("wnd[0]/tbar[0]/btn[15]").press                    
+                    while session.Busy()
+                        {
+                            sleep 500
+                            OutputDebug("SAP is busy" . "`n")
+                        }
+                    return true
+                } catch as err {
+                    MsgBox("Errore nell'esecuzione dell'azione SAP: " err.Message, "Errore", 4112)
+                    return false
+                }
+                SAPConnection.Disconnect()
+            }
+            else {
+                MsgBox("Impossibile ottenere una sessione SAP valida.", "Errore", 4112)
+                return false
+            }
+    }     
+
+    ; Metodo: UpLoadTECH_OBJ
+    ; Descrizione: Esegue l'UpLoad in SAP del file per l'aggiornamento della tabella TECH_OBJ
+    ; Parametri:
+    ; Restituisce:
+    ;   - true se l'operazione va a buon fine
+    ;   - false altrimenti
+    ; Esempio: UpLoadSecondoLivello_SAP("USS8")
+    Static UpLoadTECH_OBJ() {
+        result := this.SeparateFilePathAndName(G_CONSTANTS.file_ZPMR_TECH_OBJ_UpLoad)
+        OutputDebug("Eseguo UpLoad file: " . result.folderPath . " - " result.fileName . " - " . result.isCSV . "`n")
+        if !((result.isCSV) and (result.folderPath) and (result.fileName)) ; se il file ha estensione .csv ha un nome e un percorso allora procedo
+            return false
+            ; avvio una sessione SAP
+            session := SAPConnection.GetSession()
+            if (session) {
+                try {
+                    session.findById("wnd[0]/tbar[0]/okcd").text := "/nZPM4R_UPL_FL_FILE"
+                    session.findById("wnd[0]").sendVKey(0)
+                    session.findById("wnd[0]/usr/radR_BUT4").setFocus
+                    session.findById("wnd[0]/usr/radR_BUT4").select
+                    session.findById("wnd[0]/usr/chkP_INT").selected := true
+                    session.findById("wnd[0]/usr/ctxtP_FILE").setFocus
+                    session.findById("wnd[0]/usr/ctxtP_FILE").caretPosition := 0
+                    session.findById("wnd[0]").sendVKey(4)
+                    session.findById("wnd[1]/usr/ctxtDY_PATH").text := result.folderPath
+                    session.findById("wnd[1]/usr/ctxtDY_FILENAME").text := result.fileName
+                    session.findById("wnd[1]/usr/ctxtDY_FILENAME").caretPosition := 17
+                    session.findById("wnd[1]/tbar[0]/btn[0]").press
+                    sleep 500
+                    ; OK carica file
+                    session.findById("wnd[0]/tbar[1]/btn[8]").press
+                    ;session.findById("wnd[0]/tbar[0]/btn[15]").press
+                    while session.Busy()
+                        {
+                            sleep 500
+                            OutputDebug("SAP is busy" . "`n")
+                        }
+                    return true
+                } catch as err {
+                    MsgBox("Errore nell'esecuzione dell'azione SAP: " err.Message, "Errore", 4112)
+                    return false
+                }
+                SAPConnection.Disconnect()
+            }
+            else {
+                MsgBox("Impossibile ottenere una sessione SAP valida.", "Errore", 4112)
+                return false
+            }
+    }    
 }    

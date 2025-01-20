@@ -17,23 +17,9 @@ class FLChecker {
     Static InitializeVariables() {
         FLChecker.inverterTechnology := ""
         FLChecker.VerificaFL_SAP := false
-        FLChecker.UpLoadFiles_SAP := true
-
-/*         ; Definizione dei percorsi dei file
-		G_CONSTANTS.file_Country := A_ScriptDir . "\Config\country.txt"
-		G_CONSTANTS.file_Tech := A_ScriptDir . "\Config\Technology.txt"
-		G_CONSTANTS.file_Rules := A_ScriptDir . "\Config\Rules.txt"
-		G_CONSTANTS.file_Mask := A_ScriptDir . "\Config\Mask_FL.txt"
-        ; Guideline
-		G_CONSTANTS.file_FL_Wind:= A_ScriptDir . "\Config\Wind_FL_GuideLine.txt"
-		G_CONSTANTS.file_FL_Bess:= A_ScriptDir . "\Config\Bess_FL_GuideLine.txt"
-		G_CONSTANTS.file_FL_Solar_Common:= A_ScriptDir . "\Config\Solar_FL_Common_GuideLine.txt"
-		G_CONSTANTS.file_FL_WSB_SubStation:= A_ScriptDir . "\Config\WSB_FL_SubStation_Guideline.txt"
-		G_CONSTANTS.file_FL_Solar_CentralInv:= A_ScriptDir . "\Config\Solar_FL_CentrealInv_GuideLine.txt"
-		G_CONSTANTS.file_FL_Solar_StringInv:= A_ScriptDir . "\Config\Solar_FL_StringInv_GuideLine.txt"
-		G_CONSTANTS.file_FL_Solar_InvModule:= A_ScriptDir . "\Config\Solar_FL_InvModule_GuideLine.txt"
-		G_CONSTANTS.file_FL_2_UpLoad:= A_ScriptDir . "\FileUpLoad\FL_2_UpLoad.csv"
-		G_CONSTANTS.file_FL_n_UpLoad:= A_ScriptDir . "\FileUpLoad\FL_n_UpLoad.csv" */
+        FLChecker.UpLoadFiles_SAP := false
+        FLChecker.VerificaControlAsset := ""
+        FLChecker.VerificaTechObj := ""
     }
 
     Static SetupEventListeners() {
@@ -50,7 +36,7 @@ class FLChecker {
         }
         else if (processID = "SelectInverter") and (status != "Completed")
             FLChecker.inverterTechnology := "" 
-        
+        ; ------------------------------------------------------------------------------------------------------------------
         ; leggo il valore di ritorno dal controllo tabelle globali in SAP
         if (processID = "VerificaFL_SAP") and (status = "Completed") {
             FLChecker.VerificaFL_SAP := 1
@@ -62,22 +48,38 @@ class FLChecker {
         }
         else if (processID = "VerificaFL_SAP")
             FLChecker.VerificaFL_SAP := 0
-        
-        ; leggo il valore di ritorno dal caricamento file tabelle globali SAP
+        ; ------------------------------------------------------------------------------------------------------------------
+        ; leggo il valore di ritorno dal caricamento dei file in SAP
         if (processID = "UpLoadFiles") and ((status = "Completed") or (status = "Error")) {
-            FLChecker.UpLoadFiles_SAP := result.value   ; può assumere valori 0, 1 o 2 in base a quanti file sono stati caricati
-            outputdebug("FLChecker.UpLoadFiles: " . result.value . "`n")
+            FLChecker.UpLoadFiles_SAP := result   ; map contenente come chiave il nome del file e come valore un booleano indicante l'esito del caricamento
+            outputdebug("FLChecker.UpLoadFiles: " . result.success . "`n")
         }
         else if (processID = "UpLoadFiles")
-            FLChecker.UpLoadFiles_SAP := -1 
-        
+            FLChecker.UpLoadFiles_SAP := false
+        ; ------------------------------------------------------------------------------------------------------------------
         ; leggo il valore di ritorno dal controllo delle CTRL_ASS in SAP
-        if (processID = "VerificaControlAsset") and ((status = "Completed") or (status = "Error")) {
-            FLChecker.VerificaControlAsset := result.value   ; può assumere valori 0, 1 o 2 in base a quanti file sono stati caricati
-            outputdebug("FLChecker.UpLoadFiles: " . result.value . "`n")
+        if (processID = "VerificaControlAsset") and (status = "Completed") {
+            FLChecker.VerificaControlAsset := result.value   ; un array contenente le FL non presenti nel CTRL ASS table
+            outputdebug("FLChecker.UpLoadFiles: Contiene " . FLChecker.VerificaControlAsset.Length . " elementi `n")
         }
-        else if (processID = "UpLoadFiles")
-            FLChecker.UpLoadFiles_SAP := -1 
+        else if ((processID = "VerificaControlAsset") and (status = "Error")) {
+            FLChecker.VerificaControlAsset := result.value   ; un array contenente le FL non presenti nel Technical Object table
+            outputdebug("FLChecker.UpLoadFiles: Contiene " . FLChecker.VerificaControlAsset.Length . " elementi `n")        
+        }        
+        else if (processID = "VerificaControlAsset")
+            FLChecker.VerificaControlAsset := ""
+        ; ------------------------------------------------------------------------------------------------------------------
+        ; leggo il valore di ritorno dal controllo delle Technical Object in SAP
+        if (processID = "VerificaTechnicalObject") and ((status = "Completed")) {
+            FLChecker.VerificaTechObj := result.value   ; un array contenente le FL non presenti nel Technical Object table
+            outputdebug("FLChecker.UpLoadFiles: Contiene " . FLChecker.VerificaTechObj.Length . " elementi `n")
+        }
+        else if ((processID = "VerificaTechnicalObject") and (status = "Error")) {
+            FLChecker.VerificaTechObj := result.value   ; un array contenente le FL non presenti nel Technical Object table
+            outputdebug("FLChecker.UpLoadFiles: Contiene " . FLChecker.VerificaTechObj.Length . " elementi `n")        
+        }
+        else if  (processID = "VerificaTechnicalObject")
+            FLChecker.VerificaTechObj := ""    
 
     }
 
@@ -89,6 +91,9 @@ class FLChecker {
         EventManager.Publish("ProcessStarted", {processId: "CheckFL", status: "Started", details: "Avvio funzione", result: {}})
         EventManager.Publish("PI_Start", {inputValue: "Verifico FL "})        
         try {
+            ; -- elimino i dati .csv creati in precedenza
+            FLChecker.DeleteFiles(G_CONSTANTS.path_file_UpLoad)
+
             ; Trasformo il contenuto della FL list in un array e verifico che aderisca alla maschera generica
             CheckData_result := FLChecker.CheckData(data)
             ;result := { success: false, value: false, error: "", class: "FlChecker.ahk", function: "CheckFL" }
@@ -151,41 +156,75 @@ class FLChecker {
             if (MsgBoxResult = "Yes") {
                 ; se tutti i controlli precedenti vanno a buon fine allora procedo con
                 ; il verificare se i diversi livelli delle FL sono già presenti in SAP
-                EventManager.Publish("VerificaFL_SAP", {flArray: CheckData_result.value, flcountry: CheckCountry_result.value , fltechnology: CheckTechnology_result.value}) ; Invia una richiesta
-            }
+                EventManager.Publish("VerificaFL_SAP", {flArray: CheckData_result.value, flCountry: CheckCountry_result.value , flTechnology: CheckTechnology_result.value}) ; Invia una richiesta
+                ; attendo l'esito dell'evento VerificaFL_SAP
+                ;if(FLChecker.WaitForConditionWithTimeout(FLChecker.VerificaFL_SAP, G_CONSTANTS.timeoutSeconds)) {
+                    while(!FLChecker.VerificaFL_SAP) {
+                        OutputDebug("FLChecker.VerificaFL_SAP " . FLChecker.VerificaFL_SAP . "`n")
+                        Sleep(100)
+                    }
+                    if (FLChecker.VerificaFL_SAP = -1) { 
+                        EventManager.Publish("PI_Stop", {inputValue: "Errore nella verifica delle tabelle SAP global"}) ; Ferma l'indicatore di progresso
+                        EventManager.Publish("AddLV", {icon: "icon2", element: "", text: "Errore nella verifica delle tabelle SAP global"})
+                    }
+                    else if (FLChecker.VerificaFL_SAP = 1) { 
+                        EventManager.Publish("PI_Stop", {inputValue: "Verifica delle tabelle SAP global terminata"}) ; Ferma l'indicatore di progresso
+                    }
+            }          
             else {
-                FLChecker.VerificaFL_SAP := 1
-/*                 EventManager.Publish("PI_Stop", {inputValue: "Verifica SAP FL interrotta"}) ; Ferma l'indicatore di progresso
-                EventManager.Publish("ProcessCompleted", {processId: "CheckFL", status: "Completed", details: "Esecuzione interrotta dall'utente", result: {}})
-                CheckFL_result.error := "Esecuzione interrotta dall'utente"
-                CheckFL_result.success := true
-                EventManager.Publish("AddLV", {icon: "icon2", element: "", text: CheckFL_result.error})
-                return CheckFL_result */
+                EventManager.Publish("PI_Stop", {inputValue: "Verifica SAP global table non eseguita"}) ; Ferma l'indicatore di progresso
+                EventManager.Publish("AddLV", {icon: "icon2", element: "", text: "Verifica SAP global table non eseguita"})
             }
-            ; attendo l'esito dell'evento VerificaFL_SAP
-            ;if(FLChecker.WaitForConditionWithTimeout(FLChecker.VerificaFL_SAP, G_CONSTANTS.timeoutSeconds)) {
-            while(!FLChecker.VerificaFL_SAP) {
-                OutputDebug("FLChecker.VerificaFL_SAP " . FLChecker.VerificaFL_SAP . "`n")
-                Sleep(100)
-            }
-            if (FLChecker.VerificaFL_SAP = -1) {
-                throw Error("Errore nella verifica delle tabelle global in SAP")        
-            }
-            MsgBoxResult := MsgBox("Check global table asset in SAP? (press Si or No)","Check SAP asset table", 4132)
+            
+            ; -------------------------------------------------------------------------------------------------------------------------------------------------------
+            ; Verifica tabella CTRL ASS
+            ; -------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            MsgBoxResult := MsgBox("Check CTRL ASS table in SAP? (press Si or No)","Check SAP CTRL ASS table", 4132)
             if (MsgBoxResult = "Yes") {
                 ; richiedo la verifica in SAP delle tabelle control asset
-                EventManager.Publish("VerificaFL_SAP_ControlAsset", {flArray: CheckData_result.value, flcountry: CheckCountry_result.value , fltechnology: CheckTechnology_result.value, flInverterTechnology: FLChecker.inverterTechnology}) ; Invia una richiesta   
+                EventManager.Publish("VerificaControlAsset", {flArray: CheckData_result.value, flCountry: CheckCountry_result.value , flTechnology: CheckTechnology_result.value}) ; Invia una richiesta   
+                while(FLChecker.VerificaControlAsset = "") {
+                    OutputDebug("Attesa FLChecker.VerificaControlAsset `n")
+                    Sleep(100)
+                }
+                if (FLChecker.VerificaControlAsset.Length > 0) { ; la tabella CTRL ASS non è aggiornata, devo creare il file per UpLoad
+                    EventManager.Publish("AddLV", {icon: "icon2", element: "", text: FLChecker.VerificaControlAsset.Length .  " elementi da aggiungere in CTRL ASS"})
+                    EventManager.Publish("MakeFile_CTRL_ASS", {flArray: FLChecker.VerificaControlAsset, flTechnology: CheckTechnology_result.value , flInvType: FLChecker.inverterTechnology}) ; Invia una richiesta
+                    EventManager.Publish("PI_Stop", {inputValue: "Rilevati " . FLChecker.VerificaControlAsset.Length . " elementi non presenti in tabella CTRL ASS"}) ; Ferma l'indicatore di progresso
+                }
             }
             else {
-                EventManager.Publish("PI_Stop", {inputValue: "Verifica SAP asset table interrotta"}) ; Ferma l'indicatore di progresso
-                EventManager.Publish("ProcessCompleted", {processId: "CheckFL", status: "Completed", details: "Esecuzione interrotta dall'utente", result: {}})
-                CheckFL_result.error := "Esecuzione interrotta dall'utente"
-                CheckFL_result.success := true
-                EventManager.Publish("AddLV", {icon: "icon2", element: "", text: CheckFL_result.error})
-                return CheckFL_result
-            }            
+                EventManager.Publish("PI_Stop", {inputValue: "Verifica SAP CTRL ASS table non eseguita"}) ; Ferma l'indicatore di progresso
+                EventManager.Publish("AddLV", {icon: "icon2", element: "", text: "Verifica SAP CTRL ASS table non eseguita"})
+            }   
 
+            ; -------------------------------------------------------------------------------------------------------------------------------------------------------
+            ; Verifica tabella TECH OBJ
+            ; -------------------------------------------------------------------------------------------------------------------------------------------------------
+            
+            MsgBoxResult := MsgBox("Check TECH OBJ table in SAP? (press Si or No)","Check SAP TECH OBJ table", 4132)
+            if (MsgBoxResult = "Yes") {
+                ; richiedo la verifica in SAP delle tabelle technical object
+                EventManager.Publish("VerificaTechnicalObject", {flArray: CheckData_result.value, flCountry: CheckCountry_result.value , flTechnology: CheckTechnology_result.value}) ; Invia una richiesta   
+                while(FLChecker.VerificaTechObj = "") {
+                    OutputDebug("Attesa FLChecker.VerificaTechObj `n")
+                    Sleep(100)
+                }
+                if (FLChecker.VerificaTechObj.Length > 0) { ; la tabella TECH OBJ non è aggiornata, devo creare il file per UpLoad
+                    EventManager.Publish("AddLV", {icon: "icon2", element: "", text: FLChecker.VerificaTechObj.Length .  " elementi da aggiungere in TECH OBJ"})                    
+                    EventManager.Publish("MakeFile_TECH_OBJ", {flArray: FLChecker.VerificaTechObj, flTechnology: CheckTechnology_result.value , flInvType: FLChecker.inverterTechnology}) ; Invia una richiesta
+                    EventManager.Publish("PI_Stop", {inputValue: "Rilevati " . FLChecker.VerificaTechObj.Length . " elementi non presenti in tabella TECH OBJ"}) ; Ferma l'indicatore di progresso
+                }
+            }
+            else {
+                EventManager.Publish("PI_Stop", {inputValue: "Verifica SAP TECH OBJ table non eseguita"}) ; Ferma l'indicatore di progresso
+                EventManager.Publish("AddLV", {icon: "icon2", element: "", text: "Verifica SAP TECH OBJ table non eseguita"})
+            }              
 
+            ; FINE
+            EventManager.Publish("ProcessCompleted", {processId: "CheckFL", status: "Completed", details: "Esecuzione completata con successo", result: {}})
+            EventManager.Publish("PI_Stop", {inputValue: "Verifica FL terminata"})
         }
         catch as err {
             CheckFL_result.error := "Errore: " . err.Message          
@@ -196,6 +235,34 @@ class FLChecker {
         }
     } 
 
+    ; Metodo: DeleteFiles
+    ; Descrizione: Elimina i file di tipo *.csv contenuti nella cartella indicata
+    ; Parametri:
+    ;   - param1: Il path in cui eliminare i file
+    ;   - param2: La descrizione dei file, *.estensione
+    ; Restituisce:
+    ;   - True -> se l'operazione è andata a buon fine
+    ;   - False -> altrimenti
+    ; Esempio: DeleteFiles("c:\path", *.csv)
+    Static DeleteFiles(folderPath, pattern := "*.csv") {
+        if (!DirExist(folderPath)) {
+            MsgBox("La cartella specificata non esiste: " . folderPath, "Errore", 4112)
+            return false
+        }
+
+        try {
+            Loop Files, folderPath . "\" . pattern, "F"
+                {
+                    FileDelete(A_LoopFilePath)
+                }
+            return true
+        }
+        catch as err {
+            MsgBox("Errore durante l'eliminazione dei file: " . err.Message, "Errore", 4112)
+            return false
+        }
+    }
+    
     static HasValue(arr, strValue) {
         for _, value in arr {
             if (value = strValue)

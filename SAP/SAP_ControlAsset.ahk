@@ -14,7 +14,7 @@ class SAP_ControlAsset {
     }
 
     Static SetupEventListeners() {
-        EventManager.Subscribe("VerificaFL_SAP_ControlAsset", (data) => SAP_ControlAsset.VerificaControlAsset(data.flArray, data.flcountry, data.fltechnology, data.flInverterTechnology))
+        EventManager.Subscribe("VerificaControlAsset", (data) => SAP_ControlAsset.VerificaControlAsset(data.flArray, data.flcountry, data.fltechnology))
     }
 
     ; Metodo: VerificaControlAsset
@@ -24,7 +24,7 @@ class SAP_ControlAsset {
     ;   - un array contenente gli elementi non presenti nella CTRL_ASS se esistono
     ;   - un array vuoto altrimenti
     ; Esempio:
-    static VerificaControlAsset(flArray, flcountry, fltechnology, flInverterTechnology) {
+    static VerificaControlAsset(flArray, flcountry, fltechnology) {
         VerificaControlAsset_result := { success: false, value: false, error: "", class: "SAP_ControlAsset.ahk", function: "VerificaControlAsset" }
         EventManager.Publish("ProcessStarted", {processId: VerificaControlAsset_result.function, status: "Started", details: "Avvio funzione", result: {}})
         EventManager.Publish("PI_Start", {inputValue: "Verifica control asset"}) ; Avvia l'indicatore di progresso         
@@ -64,15 +64,22 @@ class SAP_ControlAsset {
         }
 
         if (SAP_ControlAsset.DebugMode = 0) { ; 0 -> leggo la tabella da SAP; 1 -> leggo la tabella da file
-            OutputDebug("Prelevo i dati da SAP")
+            OutputDebug("Prelevo i dati da SAP `n")
             ; estraggo i dati dalla tabella SAP filtrando in base alla tecnologia
             EventManager.Publish("ProcessProgress", {processId: VerificaControlAsset_result.function, status: "In Progress", details: "Estraggo tabella CTRL_ASS da SAP", result: {}})
-            CTRL_ASS_Table := SAP_ControlAsset.EstraiTableControlAsset(fltechnology) ; restituisce un array contenente un array per ogni per ogni riga della tabella.
-            if !(CTRL_ASS_Table) {
+            CTRL_ASS_Table := SAP_ControlAsset.EstraiTableControlAsset(fltechnology) ; restituisce un array contenente un array per ogni per ogni riga della tabella.            if !(CTRL_ASS_Table) {
                 VerificaControlAsset_result.error := "Errore estrazione tabella CTRL_ASS"
                 EventManager.Publish("ProcessError", {processId: VerificaControlAsset_result.function, status: "Error", details: VerificaControlAsset_result.error . " - Line Number: " . A_LineNumber, result: {}})                   
                 return VerificaControlAsset_result                
             }
+
+            OutputDebug("-- Verifico intestazione tabella TECH_OBJ --`n")
+                for element in CTRL_ASS_Table[1] {
+                    OutputDebug(element . "`t")            
+                }
+                OutputDebug("`n")
+            
+
             ; ricerco i valori delle intestazioni delle colonne nel file
             Index_CTRL_ASS_LivelloSedeTecnica := SAP_ControlAsset.TableHasIndex(CTRL_ASS_Table, "Liv.Sede")
             Index_CTRL_ASS_Valore_Livello := SAP_ControlAsset.TableHasIndex(CTRL_ASS_Table, "Valore Livello")
@@ -87,7 +94,7 @@ class SAP_ControlAsset {
             ; estraggo i dati da file
             EventManager.Publish("ProcessProgress", {processId: VerificaControlAsset_result.function, status: "In Progress", details: "Leggo file tabella CTRL_ASS", result: {}})
             ;CTRL_ASS_Table := SAP_ControlAsset.CreaArrayDaFile("C:\Users\a259046\OneDrive - Enel Spa\SCRIPT AHK e VBA\Functional_Location\CheckFL_rev.3\SAP\ZMPR_CTRL_ASS.txt")
-            CTRL_ASS_Table := SAP_ControlAsset.CreaArrayDaFile("C:\Users\a259046\OneDrive - Enel Spa\SCRIPT AHK e VBA\Functional_Location\CheckFL_rev.3\SAP\ZMPR_CTRL_ASS_R4Q.txt")
+            CTRL_ASS_Table := SAP_ControlAsset.CreaArrayDaFile("C:\Users\a259046\OneDrive - Enel Spa\SCRIPT AHK e VBA\Functional_Location\CheckFL_rev.3\SAP\ZMPR_CTRL_ASS.txt")
             if !(CTRL_ASS_Table) {
                 VerificaControlAsset_result.error := "Errore lettura file tabella CTRL_ASS"
                 EventManager.Publish("ProcessError", {processId: VerificaControlAsset_result.function, status: "Error", details: VerificaControlAsset_result.error . " - Line Number: " . A_LineNumber, result: {}})                   
@@ -125,7 +132,7 @@ class SAP_ControlAsset {
             AND  Index_CTRL_ASS_Valore_FL_Category 
             AND Index_CTRL_ASS_Valore_StructureIndicator) {
                 VerificaControlAsset_result.error := "Errore intestazioni tabella CTRL_ASS"
-                EventManager.Publish("ProcessError", {processId: VerificaControlAsset_result.function, status: "Error", details: VerificaControlAsset_result.error . " - Line Number: " . A_LineNumber, result: {}})                   
+                EventManager.Publish("ProcessError", {processId: VerificaControlAsset_result.function, status: "Error", details: VerificaControlAsset_result.error . " - Line Number: " . A_LineNumber, result: VerificaControlAsset_result})                   
                 EventManager.Publish("PI_Stop", {inputValue: "Errore verifica control asset"}) ; Ferma l'indicatore di progresso
                 return VerificaControlAsset_result
             }
@@ -156,15 +163,15 @@ class SAP_ControlAsset {
         ; *** Scrivo il contenuto dell'array in un file.
         SAP_ControlAsset.WriteArrayToFile(SAP_ConcArr,  A_ScriptDir . "\SAP_CTRL_ASS_" . fltechnology . ".txt")
 
-        temp_result_1 := SAP_ControlAsset.Check_CTRL_ASS_Table_slow(SAP_ConcArr, mapControlAsset)
+       ; temp_result_1 := SAP_ControlAsset.Check_CTRL_ASS_Table_slow(SAP_ConcArr, mapControlAsset)
 
-        temp_result_2 := SAP_ControlAsset.Check_CTRL_ASS_Table(SAP_ConcArr, mapControlAsset)
+        temp_result := SAP_ControlAsset.Check_CTRL_ASS_Table(SAP_ConcArr, mapControlAsset)
 
-        EventManager.Publish("ProcessCompleted", {processId: VerificaControlAsset_result.function, status: "Completed", details: "Esecuzione completata con successo", result: temp_result_2.value})
+        EventManager.Publish("ProcessCompleted", {processId: VerificaControlAsset_result.function, status: "Completed", details: "Esecuzione completata con successo", result: temp_result})
         EventManager.Publish("PI_Stop", {inputValue: "Verifica tabella Control Asset completata"}) ; Ferma l'indicatore di progresso
 
         VerificaControlAsset_result.success := true
-        VerificaControlAsset_result.value := temp_result_2
+        VerificaControlAsset_result.value := temp_result
         return VerificaControlAsset_result
     }
 
@@ -195,7 +202,7 @@ class SAP_ControlAsset {
             }            
         }
         EventManager.Publish("ProcessProgress", {processId: Check_CTRL_ASS_Table_result.function, status: "In Progress", details: count . " elementi non presenti in tabella CTRL_ASS", result: {}})
-        OutputDebug(count . " elementi non presenti in tabella CTRL_ASS")
+        OutputDebug(count . " elementi NON presenti in tabella CTRL_ASS `n")
 
         ; se tutte le FL sono presenti nella tabella di controllo SAP 
         arrResult := []
@@ -275,7 +282,7 @@ class SAP_ControlAsset {
             for key, value in map_FL {
                 if (value.check = false) {
                     arrResult.Push(value.conc)
-                    EventManager.Publish("AddLV", {icon: "icon3", element: key, text: "Non presente in control asset table"})
+                    EventManager.Publish("AddLV", {icon: "icon3", element: value.conc, text: "Non presente in control asset table"})
                 }
             }
             if (arrResult.Length = 0) {
@@ -285,16 +292,16 @@ class SAP_ControlAsset {
             }
             else {
                 EventManager.Publish("ProcessProgress", {processId: Check_CTRL_ASS_Table_result.function, status: "In Progress", details: arrResult.Length . " elementi non presenti in tabella CTRL_ASS", result: {}})
-                OutputDebug(arrResult.Length . " elementi NON presenti in tabella CTRL_ASS")
+                OutputDebug(arrResult.Length . " elementi NON presenti in tabella CTRL_ASS `n")
                 ; Scrivo il contenuto dell'array in un file.
                 SAP_ControlAsset.WriteArrayToFile(arrResult,  A_ScriptDir . "\Check_CTRL_ASS_Table.txt")
-                Check_CTRL_ASS_Table_result.value := arrResult
             }        
-        }      
+        }
+        Check_CTRL_ASS_Table_result.value := arrResult
         Check_CTRL_ASS_Table_result.success := true
-        EventManager.Publish("ProcessCompleted", {processId: Check_CTRL_ASS_Table_result.function, status: "Completed", details: "Esecuzione completata con successo", result: Check_CTRL_ASS_Table_result.value})
+        EventManager.Publish("ProcessCompleted", {processId: Check_CTRL_ASS_Table_result.function, status: "Completed", details: "Esecuzione completata con successo", result: Check_CTRL_ASS_Table_result})
         EventManager.Publish("PI_Stop", {inputValue: "Verifica tabella Control Asset completata"}) ; Ferma l'indicatore di progresso
-        return Check_CTRL_ASS_Table_result  
+        return Check_CTRL_ASS_Table_result
     }
 
     ; Funzione: FilterTabByTechnology
@@ -343,10 +350,11 @@ class SAP_ControlAsset {
     ; Esempio:   WriteArrayToFile(SAP_ConcArr,  A_ScriptDir . "\SAP_CTRL_ASS.txt")   
     ; Risultato:    
     static WriteArrayToFile(arr, filePath) {
+    try {        
         if !(arr) {
             throw Error("array vuoto")
         }
-        try {
+
             ; Apre il file in modalità scrittura, sovrascrivendo il contenuto esistente
             fileObj := FileOpen(filePath, "w")
             
@@ -359,10 +367,10 @@ class SAP_ControlAsset {
             fileObj.Close()
             
             return true  ; Operazione riuscita
-        } catch as err {
-            MsgBox("Errore durante la scrittura del file: " . err.Message, "Errore", 16)
-            return false  ; Operazione fallita
-        }
+    } catch as err {
+        MsgBox("Errore durante la scrittura del file: " . err.Message, "Errore", 16)
+        return false  ; Operazione fallita
+    }
     }
 
     ; Funzione: MakeConcTable
@@ -418,22 +426,17 @@ class SAP_ControlAsset {
             return false
         }
             
-        for rows in table {
-            row := A_index
-            if (row = 1) { ; cerco nella riga di intestazione
-                for element in rows {
-                    column := A_index
-                        ; Se trovo ricerco la stessa intestazione verifico che non abbia già memorizzato il valore
-                        if(table[row][column] = index) and !(SAP_ControlAsset.ArrayHasValue(arr, column)) {
-                            arr.Push(column)
-                            return column
-                        }
+        intestazione := table[1] ; array contenente la lista delle intestazioni
+        for element in intestazione {
+            column := A_index
+                ; Ricerco le intestazioni e verificao che non abbia già memorizzato il valore
+                if(element = index) and !(SAP_ControlAsset.ArrayHasValue(arr, column)) {
+                    arr.Push(column)
+                    return column
                 }
-            }
-            else if (row > 1) ; se termino la riga di intestazione senza trovare il valore allora 
-                return false
-
         }
+        ; se termino la riga di intestazione senza trovare il valore allora 
+        return false
     }
 
     ; Funzione: ArrayHasValue
@@ -544,17 +547,26 @@ class SAP_ControlAsset {
     ; Parametri: Nessuno
     ; Restituisce: Copia la tabella nella clipboard
     Static EstraiTableControlAsset(fltechnology) {
+        result := { success: false, value: false, error: "", class: "SAP_ControlAsset.ahk", function: "EstraiTableControlAsset" }
+        EventManager.Publish("ProcessStarted", {processId: result.function, status: "Started", details: "Avvio funzione", result: {}})
+        EventManager.Publish("PI_Start", {inputValue: "Estrai tabella CTRL_ASS da SAP"}) ; Avvia l'indicatore di progresso         
         ; avvio una sessione SAP
         session := SAPConnection.GetSession()
         if (session) {
             try {
                 Temp_Clipboard := A_Clipboard ; memorizzo il contenuto della clipboard
-                A_Clipboard := ""
+                EventManager.Publish("ProcessProgress", {processId: result.function, status: "In Progress", details: "Avvio transazione ZPMR_CTRL_ASS", result: {}})
                 session.findById("wnd[0]/tbar[0]/okcd").text := "/nZPMR_CTRL_ASS"
                 session.findById("wnd[0]").sendVKey(0)
                 ; filtro in base alla tecnologia
                 session.findById("wnd[0]/usr/txtI4-LOW").text := "Z-R" . fltechnology . "S"
                 session.findById("wnd[0]/usr/txtI5-LOW").text := fltechnology
+                ; filtro in base al livello della FL
+                session.findById("wnd[0]/usr/btn%_I6_%_APP_%-VALU_PUSH").press                
+                session.findById("wnd[1]/usr/tabsTAB_STRIP/tabpSIVA/ssubSCREEN_HEADER:SAPLALDB:3010/tblSAPLALDBSINGLE/ctxtRSCSEL_255-SLOW_I[1,0]").text := "4"
+                session.findById("wnd[1]/usr/tabsTAB_STRIP/tabpSIVA/ssubSCREEN_HEADER:SAPLALDB:3010/tblSAPLALDBSINGLE/ctxtRSCSEL_255-SLOW_I[1,1]").text := "5"
+                session.findById("wnd[1]/usr/tabsTAB_STRIP/tabpSIVA/ssubSCREEN_HEADER:SAPLALDB:3010/tblSAPLALDBSINGLE/ctxtRSCSEL_255-SLOW_I[1,2]").text := "6"  
+                session.findById("wnd[1]/tbar[0]/btn[8]").press              
                 ; modifico il numero massimo di risultati
                 session.findById("wnd[0]/usr/txtMAX_SEL").text := "9999999"
                 session.findById("wnd[0]").sendVKey(0)
@@ -566,26 +578,45 @@ class SAP_ControlAsset {
                         OutputDebug("SAP is busy" . "`n")
                     }
                 ; esporto i valori nella clipboard
+                sleep 500           
                 session.findById("wnd[0]/mbar/menu[0]/menu[10]/menu[3]/menu[2]").select
                 while session.Busy()
                     {
                         sleep 500
                         OutputDebug("SAP is busy" . "`n")
-                    }                
+                    }    
+                sleep 1000
+                EventManager.Publish("ProcessProgress", {processId: result.function, status: "In Progress", details: "Memorizzo valori in clipboard", result: {}})
                 session.findById("wnd[1]/usr/subSUBSCREEN_STEPLOOP:SAPLSPO5:0150/sub:SAPLSPO5:0150/radSPOPLI-SELFLAG[4,0]").select
                 session.findById("wnd[1]/usr/subSUBSCREEN_STEPLOOP:SAPLSPO5:0150/sub:SAPLSPO5:0150/radSPOPLI-SELFLAG[4,0]").setFocus
+                A_Clipboard := ""
                 session.findById("wnd[1]/tbar[0]/btn[0]").press
                 while session.Busy()
                     {
                         sleep 500
                         OutputDebug("SAP is busy" . "`n")
-                    } 
-                if !ClipWait(5) ; attendo fino a 5 secondi per verificare che i dati siano copiati nella clipboard
-                    {
-                        throw Error("Errore nella scrittura della clipBoard.")
                     }
+                ; Impostiamo un timeout per evitare loop infiniti
+                maxWaitTime := 10000  ; millisecondi (2 secondi)
+                startTime := A_TickCount
+
+                ; Ciclo che attende che la clipboard contenga dati
+                while (A_Clipboard = "") {
+                    if (A_TickCount - startTime > maxWaitTime) {
+                        EventManager.Publish("ProcessError", {processId: result.function, status: "Error", details: "Timeout: La clipboard non è stata riempita entro " . maxWaitTime . " ms", result: {}})
+                        MsgBox("Timeout: La clipboard non è stata riempita entro " . maxWaitTime . " ms")
+                        OutputDebug("Timeout: La clipboard non è stata riempita entro " . maxWaitTime . " ms")
+                        return false
+                    }
+                    Sleep(100)  ; Pausa di 50ms per non sovraccaricare la CPU
+                }
+                EventManager.Publish("ProcessProgress", {processId: result.function, status: "In Progress", details: "Valori memorizzati in clipboard", result: {}})
+                OutputDebug("Clipboard riempita con successo!`n")
+                
                 ; memorizzo il contenuto della clipboard in un' array
                 resultArray := SAP_ControlAsset.CreaArrayDaClipboard()
+                ; ripristino il contenuto della Clipboard
+                A_Clipboard := Temp_Clipboard
                 ; conto il numero di elementi per confrontarlo con quello dei valori presenti in tabella
                 numeroDiElementArray := resultArray.Length
                 grid := session.findById("wnd[0]/usr/cntlGRID1/shellcont/shell")
@@ -593,16 +624,20 @@ class SAP_ControlAsset {
                 tableRowCount := grid.RowCount + 1 ; aggiungo la riga di intestazione che non viene conteggiata
                 OutputDebug("Numero di elementi array: " . numeroDiElementArray . "`n")
                 OutputDebug("Numero di righe tabella SAP: " . tableRowCount . "`n")
+                EventManager.Publish("ProcessProgress", {processId: result.function, status: "In Progress", details: "Check: n. elementi SAP = " .  tableRowCount . " - n. elementi array = " . numeroDiElementArray, result: {}})
                 if (numeroDiElementArray != tableRowCount)
                     throw Error("Errore nell'estrazione dei dati.")
                 else
+                    EventManager.Publish("ProcessCompleted", {processId: result.function, status: "Completeds", details: "Esecuzione completata con successo", result: resultArray})
                     return resultArray   
             } catch as err {
+                EventManager.Publish("ProcessError", {processId: result.function, status: "Error", details: "Errore nell'esecuzione dell'azione SAP: " err.Message, result: {}})
                 MsgBox("Errore nell'esecuzione dell'azione SAP: " err.Message, "Errore", 4112)
                 return false
             }
         }
         else {
+            EventManager.Publish("ProcessError", {processId: result.function, status: "Error", details: "Impossibile ottenere una sessione SAP valida.", result: {}})
             MsgBox("Impossibile ottenere una sessione SAP valida.", "Errore", 4112)
             return false
         }
@@ -618,13 +653,15 @@ class SAP_ControlAsset {
             clipboardContent := A_Clipboard
             ; Divide il contenuto in linee
             lines := StrSplit(clipboardContent, "`n", "`r")
+            ; Ottiene il numero di campi dalla riga di intestazione (header) [seconda riga]
+            expectedFields := StrSplit(lines[2], "|").Length
             ; Inizializza un array per i codici FL
             CTRL_ASS := [] ; ogni elemento dell'array è un array contenente gli elementi della riga
             ; Estrae i codici paese
             for line in lines {
                 if (line != "") and !InStr(line, "-----------") { ; rimuovo le righe vuote e le righe composte da trattini
                     parts := StrSplit(line, "|")
-                    if (parts.Length >= 2) { ; da verificare che tutte le FL siano costituite da più campi
+                    if (parts.Length = expectedFields) { ; verifico che tutte le righe siano costituite dallo stesso numero di campi contenuti nell'intestazione
                         CTRL_ASS.Push(parts)
                     }
                     else {

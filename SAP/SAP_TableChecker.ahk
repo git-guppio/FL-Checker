@@ -31,34 +31,6 @@ class TableChecker_SAP {
         } */        
     }
 
-    ; Metodo: DeleteFiles
-    ; Descrizione: Elimina i file di tipo *.csv contenuti nella cartella indicata
-    ; Parametri:
-    ;   - param1: Il path in cui eliminare i file
-    ;   - param2: La descrizione dei file, *.estensione
-    ; Restituisce:
-    ;   - True -> se l'operazione è andata a buon fine
-    ;   - False -> altrimenti
-    ; Esempio: DeleteFiles("c:\path", *.csv)
-    Static DeleteFiles(folderPath, pattern := "*.csv") {
-        if (!DirExist(folderPath)) {
-            MsgBox("La cartella specificata non esiste: " . folderPath, "Errore", 4112)
-            return false
-        }
-
-        try {
-            Loop Files, folderPath . "\" . pattern, "F"
-                {
-                    FileDelete(A_LoopFilePath)
-                }
-            return true
-        }
-        catch as err {
-            MsgBox("Errore durante l'eliminazione dei file: " . err.Message, "Errore", 4112)
-            return false
-        }
-    }
-
     ; Metodo: VerificaFL_SAP
     ; Descrizione: Esegue il controllo della presenza nella tabelle SAP dei livelli delle FL
     ; Parametri:
@@ -89,8 +61,6 @@ class TableChecker_SAP {
                 ;~ }
         ;~ }
 
-        ; elimino i file creati in precedenza
-        TableChecker_SAP.DeleteFiles(G_CONSTANTS.path_file_UpLoad, pattern := "*.csv")
         ; verifico la presenza dei livelli contenuti come chiave nel map()
         for key, value in map_arr {
             if (map_arr[key].Length = 0) ; se non ci sono elementi considero la prossima chiave

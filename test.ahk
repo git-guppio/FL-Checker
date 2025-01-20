@@ -1,6 +1,12 @@
-#Requires AutoHotkey v2.0
+ #Requires AutoHotkey v2.0
 
+ a:=0
+ loop 10 {
+    a++
+    OutputDebug(a)
+ }
 
+/*
 #Include GlobalConstants.ahk
 #Include Utils\EventManager.ahk
 #Include Utils\ProcessManager.ahk
@@ -97,4 +103,4 @@ OutputDebug("-- Creato File --`n")
             MsgBox("Errore durante la scrittura del file: " . err.Message, "Errore", 4112)
             return false
         }
-    }
+    } */

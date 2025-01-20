@@ -15,6 +15,9 @@
 #Include SAP\SAP_TableChecker.ahk
 #Include SAP\SAP_UpLoadTable.ahk
 #Include SAP\SAP_ControlAsset.ahk
+#Include SAP\MakeFileUpload_CTRL_ASS.ahk
+#Include SAP\SAP_TechObj.ahk
+#Include SAP\MakeFileUpload_TECH_OBJ.ahk
 
 Main()
 
@@ -22,5 +25,5 @@ Main() {
     ; Avvio dell'applicazione
     EventManager.Publish("ProcessStarted", {processId: "MainGUI", status: "Started", details: "", result: {}})
     app := MainApp()
-    app.ShowMain()
+    app.ShowMain
 }

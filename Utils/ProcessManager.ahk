@@ -96,7 +96,7 @@ class ProcessManager {
     }
 }
     
-    ; Esempio di utilizzo
+/*     ; Esempio di utilizzo
     ExampleUsage() {
         processId := "TestProcess"
         
@@ -155,4 +155,4 @@ class ProcessManager {
 
         ; Pulizia
         ProcessManager.ClearAllProcesses()
-}
+} */

@@ -30,7 +30,7 @@
         intestazione_FL_n: "TPLKZ;FLTYP;FLLEVEL;VALUE;VALUETX;REFLEVEL`r`n",
         ; Intestazione dei file per upload CTRL_ASS e OBJ
         intestazione_CTRL_ASS: "VALUE;SUB_VALUE;SUB_VALUE2;TPLKZ;FLTYP;FLLEVEL;CODE_SEZ_PM;CODE_SIST;CODE_PARTE;TIPO_ELEM`r`n",
-        intestazione_OBJ: "VALUE;SUB_VALUE;SUB_VALUE2;TPLKZ;FLTYP;FLLEVEL;EQART;RBNR;NATURE;DOCUMENTO_PM`r`n",
+        intestazione_TECH_OBJ: "VALUE;SUB_VALUE;SUB_VALUE2;TPLKZ;FLTYP;FLLEVEL;EQART;RBNR;NATURE;DOCUMENTO_PM`r`n",
         ; timeout operazioni in SAP
         timeoutSeconds: 30,
         ; Nomi colonne tabella CTRL_ASS - Control Asset
