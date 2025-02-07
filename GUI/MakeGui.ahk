@@ -179,7 +179,7 @@ class MakeMainGUI {
         this.imageListID := IL_Create(3)
         this.gui.LV.SetImageList(this.imageListID)
 
-        icons := [295, 236, 132, 4] ; [OK, Allert, NOK, File]
+        icons := [295, 236, 132, 4, 278] ; [OK, Allert, NOK, File, info]
         for icon in icons {
             IL_Add(this.imageListID, "shell32.dll", icon)
         }

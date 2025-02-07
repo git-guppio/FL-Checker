@@ -29,7 +29,7 @@ class SAP_TechnicalObject {
         EventManager.Publish("ProcessStarted", {processId: VerificaTechnicalObject_result.function, status: "Started", details: "Avvio funzione", result: {}})
         EventManager.Publish("PI_Start", {inputValue: "Verifica tecnical object"}) ; Avvia l'indicatore di progresso         
         
-        mapControlAsset := map()
+        mapTechObj := map()
         data := {lunghezza: 0, conc: ""}
         Lista_FL_Conc := []
         ; analizzo gli elementi presenti nell'array FL
@@ -48,7 +48,7 @@ class SAP_TechnicalObject {
                 }
                 ; memorizzo i valori nel map
                 ; preparo una struttura dati per memorizzare il risultato del confronto
-                mapControlAsset[element] := {lunghezza: numberOfElement, conc: concatena, check: ""}
+                mapTechObj[element] := {lunghezza: numberOfElement, conc: concatena, check: ""}
                 Lista_FL_Conc.Push(concatena)
             }
         }
@@ -88,6 +88,8 @@ class SAP_TechnicalObject {
             Index_TECH_OBJ_Valore_StructureIndicator := SAP_TechnicalObject.TableHasIndex(TECH_OBJ_Table, "Str. ")
             Index_TECH_OBJ_Valore_FL_Category := SAP_TechnicalObject.TableHasIndex(TECH_OBJ_Table, "C")
 
+            SAP_TechnicalObject.TableHasIndex() ; resetto al funzione
+
         }
         else if (SAP_TechnicalObject.DebugMode = 1) { ; 0 -> leggo la tabella da SAP; 1 -> leggo la tabella da file
             OutputDebug("Prelevo i dati da file")
@@ -115,6 +117,8 @@ class SAP_TechnicalObject {
             Index_TECH_OBJ_Valore_Liv_Superiore_2 := SAP_TechnicalObject.TableHasIndex(TECH_OBJ_Table, "Valore Liv. Superiore")
             Index_TECH_OBJ_Valore_StructureIndicator := SAP_TechnicalObject.TableHasIndex(TECH_OBJ_Table, "Str. ")
             Index_TECH_OBJ_Valore_FL_Category := SAP_TechnicalObject.TableHasIndex(TECH_OBJ_Table, "C")
+
+            SAP_TechnicalObject.TableHasIndex() ; resetto la funzione
 
             ; Filtro la tabella in base al tipo di tecnologia.
             ; Esamino i campi Index_TECH_OBJ_Valore_FL_Category e Index_TECH_OBJ_Valore_StructureIndicator
@@ -169,9 +173,9 @@ class SAP_TechnicalObject {
         ; *** Scrivo il contenuto dell'array in un file.
         SAP_TechnicalObject.WriteArrayToFile(SAP_ConcArr,  A_ScriptDir . "\SAP_TECH_OBJ_" . fltechnology . ".txt")
 
-       ; temp_result_1 := SAP_TechnicalObject.Check_TECH_OBJ_Table_slow(SAP_ConcArr, mapControlAsset)
+       ; temp_result_1 := SAP_TechnicalObject.Check_TECH_OBJ_Table_slow(SAP_ConcArr, mapTechObj)
 
-        temp_result := SAP_TechnicalObject.Check_TECH_OBJ_Table(SAP_ConcArr, mapControlAsset)
+        temp_result := SAP_TechnicalObject.Check_TECH_OBJ_Table(SAP_ConcArr, mapTechObj)
 
         EventManager.Publish("ProcessCompleted", {processId: VerificaTechnicalObject_result.function, status: "Completed", details: "Esecuzione completata con successo", result: temp_result})
         EventManager.Publish("PI_Stop", {inputValue: "Verifica tabella technical object completata"}) ; Ferma l'indicatore di progresso

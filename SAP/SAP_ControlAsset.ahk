@@ -67,7 +67,8 @@ class SAP_ControlAsset {
             OutputDebug("Prelevo i dati da SAP `n")
             ; estraggo i dati dalla tabella SAP filtrando in base alla tecnologia
             EventManager.Publish("ProcessProgress", {processId: VerificaControlAsset_result.function, status: "In Progress", details: "Estraggo tabella CTRL_ASS da SAP", result: {}})
-            CTRL_ASS_Table := SAP_ControlAsset.EstraiTableControlAsset(fltechnology) ; restituisce un array contenente un array per ogni per ogni riga della tabella.            if !(CTRL_ASS_Table) {
+            CTRL_ASS_Table := SAP_ControlAsset.EstraiTableControlAsset(fltechnology) ; restituisce un array contenente un array per ogni per ogni riga della tabella.            
+            if !(CTRL_ASS_Table) {
                 VerificaControlAsset_result.error := "Errore estrazione tabella CTRL_ASS"
                 EventManager.Publish("ProcessError", {processId: VerificaControlAsset_result.function, status: "Error", details: VerificaControlAsset_result.error . " - Line Number: " . A_LineNumber, result: {}})                   
                 return VerificaControlAsset_result                
@@ -87,6 +88,8 @@ class SAP_ControlAsset {
             Index_CTRL_ASS_Valore_Liv_Superiore_2 := SAP_ControlAsset.TableHasIndex(CTRL_ASS_Table, "Valore Liv. Superiore")
             Index_CTRL_ASS_Valore_StructureIndicator := SAP_ControlAsset.TableHasIndex(CTRL_ASS_Table, "Str. ")
             Index_CTRL_ASS_Valore_FL_Category := SAP_ControlAsset.TableHasIndex(CTRL_ASS_Table, "C")
+
+            SAP_ControlAsset.TableHasIndex() ; resetto la funzione
 
         }
         else if (SAP_ControlAsset.DebugMode = 1) { ; 0 -> leggo la tabella da SAP; 1 -> leggo la tabella da file
@@ -109,6 +112,8 @@ class SAP_ControlAsset {
             Index_CTRL_ASS_Valore_Liv_Superiore_2 := SAP_ControlAsset.TableHasIndex(CTRL_ASS_Table, "Valore Liv. Superiore")
             Index_CTRL_ASS_Valore_StructureIndicator := SAP_ControlAsset.TableHasIndex(CTRL_ASS_Table, "Str. ")
             Index_CTRL_ASS_Valore_FL_Category := SAP_ControlAsset.TableHasIndex(CTRL_ASS_Table, "C")
+
+            SAP_ControlAsset.TableHasIndex() ; resetto la funzione
 
             ; Filtro la tabella in base al tipo di tecnologia.
             ; Esamino i campi Index_CTRL_ASS_Valore_FL_Category e Index_CTRL_ASS_Valore_StructureIndicator

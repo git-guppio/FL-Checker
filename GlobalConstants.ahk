@@ -25,6 +25,8 @@
 		file_ZPMR_CTRL_ASS_UpLoad: A_ScriptDir . "\FileUpLoad\ZPMR_CTRL_ASS.csv",
         ; Definizione del file per l'upload delle tabelle Technical Object
         file_ZPMR_TECH_OBJ_UpLoad: A_ScriptDir . "\FileUpLoad\ZPMR_TECH_OBJ.csv",
+        ; Definizione del file per il controllo delle Technical Object di tutte le FL
+        file_Check_TECH_OBJ: A_ScriptDir . "\FileUpLoad\FL_Check_TECH_OBJ.csv",        
         ; Intestazione dei file per upload
         intestazione_FL_2: "TPLKZ;FLTYP;FLLEVEL;LAND1;VALUE`r`n",
         intestazione_FL_n: "TPLKZ;FLTYP;FLLEVEL;VALUE;VALUETX;REFLEVEL`r`n",

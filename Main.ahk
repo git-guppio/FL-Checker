@@ -18,6 +18,7 @@
 #Include SAP\MakeFileUpload_CTRL_ASS.ahk
 #Include SAP\SAP_TechObj.ahk
 #Include SAP\MakeFileUpload_TECH_OBJ.ahk
+#Include SAP\MakeFileCheck_TECH_OBJ.ahk
 
 Main()
 

@@ -1,10 +1,30 @@
  #Requires AutoHotkey v2.0
 
- a:=0
- loop 10 {
-    a++
-    OutputDebug(a)
- }
+ RemoveDuplicates(inputArray) {
+    ; Crea un Map per tenere traccia degli elementi unici
+    uniqueMap := Map()
+    MyArr := []
+    ; Inserisce ogni elemento nel Map (che mantiene automaticamente solo valori unici)
+    for value in inputArray {
+        uniqueMap[value] := true
+    }
+    
+    for key, element in uniqueMap {
+        MyArr.Push(key)
+    }
+    ; Converte le chiavi del Map in un nuovo array
+    return MyArr
+}
+
+; Esempio di utilizzo:
+
+myArray := [1, 2, 2, 3, 3, 4, 5, 5]
+uniqueArray := RemoveDuplicates(myArray)
+for element in uniqueArray {
+    temp .= element . "`n`r"
+}
+
+OutputDebug temp
 
 /*
 #Include GlobalConstants.ahk

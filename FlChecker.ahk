@@ -202,9 +202,19 @@ class FLChecker {
             ; -------------------------------------------------------------------------------------------------------------------------------------------------------
             ; Verifica tabella TECH OBJ
             ; -------------------------------------------------------------------------------------------------------------------------------------------------------
-            
+            MsgBoxResult := MsgBox("Vuoi creare la lista delle TECH OBJ per tutte le FL? (press Si or No)","Make TECH OBJ table", 4132)
+            if (MsgBoxResult = "Yes") {
+                ; creo un file per la verifica di tutte le FL contenente i valori secondo le linee guida della Tech Obj
+                EventManager.Publish("AddLV", {icon: "icon5", element: "", text: "Creo tabella verifica Tech Obj"})                    
+                EventManager.Publish("MakeFileCheck_TECH_OBJ", {flArray: CheckData_result.value, flTechnology: CheckTechnology_result.value , flInvType: FLChecker.inverterTechnology}) ; Invia una richiesta
+            }
+
             MsgBoxResult := MsgBox("Check TECH OBJ table in SAP? (press Si or No)","Check SAP TECH OBJ table", 4132)
             if (MsgBoxResult = "Yes") {
+                ; creo un file per la verifica di tutte le FL contenente i valori secondo le linee guida della Tech Obj
+                EventManager.Publish("AddLV", {icon: "icon5", element: "", text: "Creo tabella verifica Tech Obj"})                    
+                EventManager.Publish("MakeFileCheck_TECH_OBJ", {flArray: CheckData_result.value, flTechnology: CheckTechnology_result.value , flInvType: FLChecker.inverterTechnology}) ; Invia una richiesta
+                
                 ; richiedo la verifica in SAP delle tabelle technical object
                 EventManager.Publish("VerificaTechnicalObject", {flArray: CheckData_result.value, flCountry: CheckCountry_result.value , flTechnology: CheckTechnology_result.value}) ; Invia una richiesta   
                 while(FLChecker.VerificaTechObj = "") {
@@ -1032,7 +1042,7 @@ class FLChecker {
                         }
                         else { ; in tutti gli altri casi devo considerare il tipo di tecnologia degli inverter
                             if !(FLChecker.TestGuideline_array(pattern_array_FL_Wind_Technology, element)) { ; confronto l'elemento con le linee guida
-                                result.error := "Errore guideline Bess."                
+                                result.error := "Errore guideline Wind."                
                                 result.success := false
                                 EventManager.Publish("AddLV", {icon: "icon3", element: " " . element, text: result.error})
                                 EventManager.Publish("ProcessError", {processId: result.function, status: "Error", details: result.error . " - Line Number: " . A_LineNumber, result: {}})                                                  
